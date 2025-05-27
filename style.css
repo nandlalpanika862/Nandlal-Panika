@@ -1,0 +1,547 @@
+/* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Define Color Palette & Fonts */
+:root {
+    --primary-color: #0A2463; /* Deep Blue */
+    --secondary-color: #3E92CC; /* Vibrant Accent */
+    --text-color: #333333;
+    --background-color: #F4F7F5; /* Light Background */
+    --header-footer-bg: #FFFFFF;
+
+    --font-family: 'Open Sans', sans-serif;
+}
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+/* Overall Page Styling */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    line-height: 1.6;
+    font-size: 16px; /* Base font size */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700; /* Bold headings */
+    color: var(--primary-color);
+    margin-bottom: 0.75em;
+}
+
+h1 { font-size: 2.5em; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.5em; }
+
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--secondary-color);
+    text-decoration: none; /* No underline by default */
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+/* Header Styling */
+header {
+    background-color: var(--header-footer-bg);
+    color: var(--primary-color);
+    padding: 1.5em 2em;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex; /* For aligning title and nav */
+    justify-content: space-between; /* Title on left, nav on right */
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2em; /* Prominent site title */
+    color: var(--primary-color); /* Using primary color for title */
+    margin-bottom: 0; /* Remove default margin */
+}
+
+header nav ul {
+    list-style: none;
+    display: flex; /* Display nav links in a row */
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    font-weight: bold;
+}
+
+/* Main Content Section Styling */
+main {
+    padding: 2em; /* Padding around the main content */
+}
+
+main section {
+    background-color: var(--header-footer-bg); /* White background for sections */
+    padding: 2em;
+    margin-bottom: 2em; /* Space between sections */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Article Generator Section Specific Styles */
+#article-generator-section h2 {
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: var(--primary-color);
+}
+
+#article-form div {
+    margin-bottom: 1.5em; /* Spacing between form fields */
+}
+
+#article-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: var(--text-color);
+}
+
+#article-form input[type="text"],
+#article-form input[type="number"],
+#article-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-family: var(--font-family);
+    line-height: 1.5;
+    background-color: #fff; /* Ensure background is white */
+    color: var(--text-color);
+}
+
+#article-form input[type="text"]:focus,
+#article-form input[type="number"]:focus,
+#article-form textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(62, 146, 204, 0.2);
+}
+
+#article-form textarea {
+    resize: vertical; /* Allow vertical resizing */
+    min-height: 100px;
+}
+
+#article-form .button { /* Styling for the submit button */
+    display: block; /* Make button block to center it or control width */
+    width: auto; /* Auto width or set a specific width */
+    margin: 1em auto 0; /* Center button if block */
+    padding: 12px 25px; /* Larger padding for better clickability */
+    font-size: 1.1rem; /* Slightly larger font */
+    font-weight: bold;
+}
+
+/* Generated Article Output Styling */
+#generated-article-output {
+    margin-top: 2.5em;
+    padding: 1.5em;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Slightly different background for output */
+    min-height: 100px; /* Minimum height to ensure it's visible */
+    transition: all 0.3s ease-in-out; /* Smooth transition for content changes */
+}
+
+#generated-article-output h1 {
+    font-size: 1.8em; /* Adjusted for output area */
+    color: var(--primary-color);
+    margin-bottom: 0.75em;
+}
+
+#generated-article-output h2 {
+    font-size: 1.5em; /* Adjusted for output area */
+    color: var(--primary-color);
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+
+#generated-article-output h3 {
+    font-size: 1.2em; /* Adjusted for output area */
+    color: var(--secondary-color); /* Use accent for H3 in output */
+    margin-top: 0.75em;
+    margin-bottom: 0.25em;
+}
+
+#generated-article-output p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1em;
+}
+
+#generated-article-output ul {
+    list-style-position: inside;
+    margin-left: 1em;
+    margin-bottom: 1em;
+}
+
+#generated-article-output li {
+    margin-bottom: 0.5em;
+}
+
+#generated-article-output .introduction {
+    font-style: italic;
+    color: #555;
+    border-left: 3px solid var(--secondary-color);
+    padding-left: 10px;
+}
+
+#generated-article-output .conclusion {
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 1.5em;
+}
+
+/* Important Info Section Specific Styles */
+#important-info-section {
+    background-color: #eef3f7; /* Slightly different background */
+    border-left: 5px solid var(--secondary-color); /* Accent border */
+    padding: 2em; /* Keep padding consistent or adjust as needed */
+}
+
+#important-info-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 1em; /* More space after heading */
+    text-align: left; /* Override centered h2 from article generator if any global style affected it */
+}
+
+#important-info-section h3 {
+    color: var(--primary-color);
+    margin-top: 1.5em;
+    margin-bottom: 0.75em;
+    font-size: 1.3em; /* Slightly smaller than section h2 */
+}
+
+#important-info-section p {
+    font-size: 1rem; /* Ensure readability */
+    line-height: 1.7; /* Good line spacing */
+    margin-bottom: 1.25em; /* Space between paragraphs */
+}
+
+#important-info-section p strong {
+    color: var(--primary-color); /* Make strong text stand out */
+    font-weight: 700;
+}
+
+#important-info-section ul {
+    list-style-type: disc; /* Standard disc bullets */
+    margin-left: 20px; /* Indentation for the list */
+    margin-bottom: 1.25em;
+    padding-left: 1em; /* Padding for list items */
+}
+
+#important-info-section li {
+    margin-bottom: 0.75em; /* Space between list items */
+    line-height: 1.6;
+}
+
+#important-info-section li strong {
+    font-weight: 700; /* Ensure strong in LIs is also bold */
+}
+
+/* Other Tools Section Specific Styles */
+#other-tools-section {
+    /* Optional: Add a specific background if different from main section default */
+}
+
+#other-tools-section h2 {
+    text-align: center;
+    margin-bottom: 1.5em; /* Space below the main heading of this section */
+    color: var(--primary-color);
+}
+
+.tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5em; /* Space between cards */
+    justify-content: center; /* Center cards if they don't fill the row */
+}
+
+.tool-card {
+    background-color: var(--header-footer-bg);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5em;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    width: 100%; /* Default for mobile */
+    display: flex;
+    flex-direction: column;
+    min-height: 250px; /* Minimum height for consistency */
+}
+
+.tool-card h3 {
+    font-size: 1.3em;
+    color: var(--secondary-color); /* Accent color for tool titles */
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+.tool-card label {
+    display: block;
+    font-weight: bold;
+    margin-top: 0.75em;
+    margin-bottom: 0.3em;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.tool-card input[type="text"],
+.tool-card input[type="number"],
+.tool-card input[type="date"],
+.tool-card input[type="url"],
+.tool-card select,
+.tool-card textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    margin-bottom: 0.75em;
+    font-family: var(--font-family);
+}
+
+.tool-card input[type="text"]:focus,
+.tool-card input[type="number"]:focus,
+.tool-card input[type="date"]:focus,
+.tool-card input[type="url"]:focus,
+.tool-card select:focus,
+.tool-card textarea:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(62, 146, 204, 0.15);
+}
+
+.tool-card textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.tool-card .button {
+    display: block;
+    width: 100%; /* Make buttons full width within card */
+    padding: 10px 15px;
+    font-size: 1rem;
+    margin-top: 1em; /* Space above button */
+    margin-bottom: 0.5em; /* Space below button */
+}
+/* Specific for multiple buttons in one card like WordPad */
+.tool-card#wordpad-editor .button {
+    margin-top: 0.5em; /* Reduce top margin if multiple buttons */
+}
+
+
+.tool-card .tool-output {
+    margin-top: 1em;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    min-height: 40px; /* Min height for output */
+    font-size: 0.9rem;
+    word-wrap: break-word; /* Wrap long results */
+    flex-grow: 1; /* Allow output to take remaining space */
+    display: flex;
+    flex-direction: column; /* Stack p tags vertically */
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* Center text within the output area */
+}
+
+.tool-card .tool-output p {
+    margin-bottom: 0.5em; /* Spacing between paragraphs in output */
+    font-size: 0.95rem;
+}
+
+.tool-card .tool-output p:last-child {
+    margin-bottom: 0;
+}
+
+.tool-card .tool-output .error {
+    color: #D8000C; /* Red color for error messages */
+    font-weight: bold;
+}
+
+.tool-card .tool-output .love-percentage {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--secondary-color); /* Accent color for the percentage */
+    margin: 0.2em 0;
+}
+
+.tool-card .tool-output .love-heart {
+    font-size: 1.2em;
+    color: #ff4d4d; /* A reddish pink for hearts */
+    display: inline-block;
+    animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.1); }
+}
+
+.tool-card .tool-output .age-detail {
+    font-size: 1.2em; /* Larger font for age components */
+    color: var(--primary-color);
+    margin: 0.1em 0; /* Tighter spacing for age details */
+}
+
+.tool-card .tool-output .age-detail strong {
+    color: var(--secondary-color); /* Accent for the numbers */
+    font-size: 1.3em;
+}
+
+/* General Tool Status Div Styling */
+.tool-status {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    margin-top: 0.5em; /* Space above status message */
+    margin-bottom: 0.5em; /* Space below status message */
+    min-height: 1.2em; /* Reserve space to prevent layout shifts */
+    text-align: center;
+}
+
+/* Voice to Text Specific Button Styling when Listening */
+#vtt-start-btn.listening {
+    background-color: #D8000C; /* Red to indicate recording/listening */
+    color: white;
+}
+#vtt-start-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+#vtt-start-btn:disabled:hover {
+    background-color: #ccc; /* Keep hover state same as disabled */
+}
+
+/* Salary Calculator Result Styling */
+.tool-card .tool-output ul.salary-details {
+    list-style-type: none; /* Remove default bullets */
+    padding: 0;
+    margin-top: 0.5em;
+    text-align: left; /* Align text to the left for readability */
+    width: 100%; /* Ensure it takes full width of output area */
+}
+
+.tool-card .tool-output ul.salary-details li {
+    margin-bottom: 0.4em; /* Space between salary details */
+    font-size: 1rem; /* Slightly larger for emphasis */
+}
+
+.tool-card .tool-output ul.salary-details li strong {
+    color: var(--primary-color); /* Use primary color for the calculated amounts */
+    margin-left: 0.5em;
+}
+
+
+/* Responsive adjustments for .tools-grid */
+@media (min-width: 600px) { /* Tablets and small desktops */
+    .tool-card {
+        width: calc(50% - 0.75em); /* 2 columns, considering gap */
+    }
+}
+
+@media (min-width: 992px) { /* Medium desktops */
+    .tool-card {
+        width: calc(33.333% - 1em); /* 3 columns, considering gap */
+    }
+}
+
+@media (min-width: 1200px) { /* Larger desktops */
+    /* Optional: could go to 4 columns if desired, or keep at 3 */
+    /* .tool-card {
+        width: calc(25% - 1.125em); 
+    } */
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: var(--header-footer-bg);
+    color: var(--text-color);
+    padding: 1.5em 2em;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #e0e0e0; /* Subtle top border */
+    font-size: 0.9em;
+}
+
+/* Responsive Design - Mobile First */
+
+/* Tablet */
+@media (min-width: 768px) {
+    body {
+        font-size: 17px;
+    }
+    header {
+        padding: 1.5em 3em;
+    }
+    main {
+        padding: 2em 3em;
+    }
+    main section {
+        padding: 2.5em;
+    }
+    h1 { font-size: 3em; }
+    h2 { font-size: 2.25em; }
+    header h1 { font-size: 2.25em; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    body {
+        font-size: 18px;
+    }
+    header {
+        padding: 2em 4em;
+    }
+    main {
+        padding: 3em 4em;
+        max-width: 1200px; /* Max width for main content on large screens */
+        margin-left: auto;
+        margin-right: auto;
+    }
+    main section {
+        padding: 3em;
+    }
+    h1 { font-size: 3.5em; }
+    h2 { font-size: 2.5em; }
+    header h1 { font-size: 2.5em; }
+}
+
+/* Placeholder for other interactive elements if needed */
+.button {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: var(--primary-color);
+}
