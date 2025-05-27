@@ -455,6 +455,25 @@ main section {
     margin-left: 0.5em;
 }
 
+/* Informative List Styling (used by SEO Audit and other placeholders) */
+.tool-card .tool-output ul.info-list {
+    list-style-type: disc; /* Use discs for bullet points */
+    padding-left: 20px; /* Indent list */
+    margin-top: 0.5em;
+    text-align: left;
+    width: 100%;
+}
+
+.tool-card .tool-output ul.info-list li {
+    margin-bottom: 0.5em;
+    font-size: 0.9rem; /* Slightly smaller for list items in output */
+    line-height: 1.5;
+}
+
+.tool-card .tool-output ul.info-list li strong {
+    color: var(--primary-color);
+}
+
 
 /* Responsive adjustments for .tools-grid */
 @media (min-width: 600px) { /* Tablets and small desktops */
