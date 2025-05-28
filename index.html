@@ -3,205 +3,614 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOLVEiT PRO - Article Generator & Tools</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="SOLVEiT PRO - Your ultimate advanced loan calculator for all your financial planning needs.">
+    <title>SOLVEiT PRO - Advanced Loan Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 4px solid #e74c3c;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 1.1em;
+            color: #bdc3c7;
+        }
+        main#mainContent {
+            padding: 20px;
+            padding-bottom: 120px; /* Adjusted padding for fixed footer */
+        }
+        footer {
+            background-color: #34495e;
+            color: #ecf0f1;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 0.9em;
+        }
+        footer a {
+            color: #e74c3c;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Calculator Styles */
+        .calculator-container {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 30px auto;
+        }
+        .calculator-container h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+        .input-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #34495e;
+        }
+        .input-group input[type='number'],
+        .input-group select {
+            padding: 12px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .tenure-group {
+            flex-direction: row;
+            align-items: center;
+        }
+        .tenure-group input[type='number'] {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .tenure-group select {
+            width: auto;
+            min-width: 100px;
+        }
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #calculateButton {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #calculateButton:hover {
+            background-color: #c0392b;
+        }
+        #resultsArea {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+        }
+        #resultsArea h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed #bdc3c7;
+            font-size: 1.1em;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-item span:first-child {
+            color: #34495e;
+            font-weight: bold;
+        }
+        .result-item span:last-child {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        #amortizationScheduleContainer {
+            margin-top: 30px;
+        }
+        #amortizationScheduleContainer h3 {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .calculator-container {
+                margin: 20px 15px;
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+            .tenure-group {
+                flex-direction: column;
+            }
+            .tenure-group input[type='number'] {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .tenure-group select {
+                width: 100%;
+            }
+        }
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+            .calculator-container h2 {
+                font-size: 1.5em;
+            }
+            #calculateButton {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .result-item span:last-child {
+                margin-top: 5px;
+            }
+        }
+
+        /* Amortization Table Styles */
+        .amortization-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .amortization-table th, .amortization-table td {
+            border: 1px solid #bdc3c7;
+            padding: 8px 10px;
+            text-align: right;
+        }
+        .amortization-table th {
+            background-color: #34495e;
+            color: #ecf0f1;
+            text-align: center;
+        }
+        .amortization-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .amortization-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Input Focus Style */
+        .input-group input[type='number']:focus,
+        .input-group select:focus {
+            border-color: #e74c3c; /* Accent color */
+            box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+            outline: none;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around; /* Adjust as needed */
+            margin: 20px 0;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+        }
+
+        /* Pie Chart (using conic-gradient) */
+        .pie-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            /* background-image will be set by JS */
+            margin: 10px;
+        }
+
+        /* Chart Legend */
+        .chart-legend {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .legend-color-box {
+            width: 15px;
+            height: 15px;
+            margin-right: 8px;
+            border-radius: 3px;
+        }
+
+        /* Legal Modal Styles */
+        .legal-modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+        }
+
+        .legal-modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 25px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 700px;
+            border-radius: 8px;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .legal-modal-content h2 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .close-modal-btn {
+            color: #aaa;
+            float: right; /* Position to the top-right */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal-btn:hover,
+        .close-modal-btn:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Responsive adjustments for modal content */
+        @media (max-width: 768px) {
+            .legal-modal-content {
+                width: 90%;
+                margin: 15% auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>SOLVEiT PRO</h1>
-        <nav>
-            <!-- Navigation links will go here -->
-        </nav>
+        <p>Your Ultimate Loan Solution Hub</p>
     </header>
-
-    <main>
-        <section id="article-generator-section" class="animate-on-scroll">
-            <h2>Create Your High-Quality Article</h2>
-            <form id="article-form">
-                <div>
-                    <label for="prompt">Prompt/Topic:</label>
-                    <textarea id="prompt" name="prompt" rows="4" placeholder="e.g., Write a 1500-word blog post titled '10 Proven Ways to Make Money Blogging in 2024 (Beginner's Guide)'..." required></textarea>
+    <main id="mainContent">
+        <div class="calculator-container">
+            <h2>Advanced Loan Calculator</h2>
+            <form id="loanCalculatorForm">
+                <div class="input-group">
+                    <label for="loanAmount">Loan Amount (₹):</label>
+                    <input type="number" id="loanAmount" required>
                 </div>
-                <div>
-                    <label for="primary-keywords">Primary Keyword(s):</label>
-                    <input type="text" id="primary-keywords" name="primary-keywords" placeholder="e.g., blog monetization" required>
+                <div class="input-group">
+                    <label for="interestRate">Annual Interest Rate (%):</label>
+                    <input type="number" id="interestRate" step="0.01" min="0" required>
                 </div>
-                <div>
-                    <label for="secondary-keywords">Secondary Keyword(s):</label>
-                    <input type="text" id="secondary-keywords" name="secondary-keywords" placeholder="e.g., income from blogging">
+                <div class="input-group tenure-group">
+                    <label for="loanTenure">Loan Tenure:</label>
+                    <input type="number" id="loanTenure" min="1" required>
+                    <select id="tenureType">
+                        <option value="years" selected>Years</option>
+                        <option value="months">Months</option>
+                    </select>
                 </div>
-                <div>
-                    <label for="word-count">Desired Post Length (approx. words):</label>
-                    <input type="number" id="word-count" name="word-count" value="1000" min="100">
+                <div class="button-group">
+                    <button type="button" id="calculateButton">Calculate</button>
                 </div>
-                <button type="submit" class="button">Generate Article</button>
             </form>
-            <div id="generated-article-output">
-                <!-- Generated article will appear here -->
+            <div id="resultsArea">
+                <h3>Loan Summary</h3>
+                <div class="chart-container">
+                    <div id="loanPieChart" class="pie-chart"></div>
+                    <div id="chartLegend" class="chart-legend">
+                        <!-- Legend items will be added by JS -->
+                    </div>
+                </div>
+                <div class="result-item">
+                    <span>Monthly EMI:</span>
+                    <span id="monthlyEmiResult">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Total Interest Payable:</span>
+                    <span id="totalInterestResult">-</span>
+                </div>
+                <div class="result-item">
+                    <span>Total Amount Payable (Principal + Interest):</span>
+                    <span id="totalAmountResult">-</span>
+                </div>
             </div>
-        </section>
-
-        <section id="important-info-section" class="animate-on-scroll">
-            <h2>About Your AI Article Assistant</h2>
-            <p><strong>Purpose:</strong> This tool is designed to help you generate high-quality, unique, and SEO-optimized blog posts quickly and efficiently. It's your assistant for drafting content, which you can then refine and personalize.</p>
-            
-            <p><strong>Content Quality:</strong> Our tool aims for originality, readability, and user-friendliness. While we strive for uniqueness by combining your inputs in novel ways, please remember this is a frontend-based generator. Always review, edit, and customize the generated content to ensure it aligns with your voice and quality standards. Fact-check information and add your unique insights.</p>
-            
-            <p><strong>SEO Focus:</strong> To maximize your content's visibility, remember to use relevant keywords in your prompt and dedicated keyword fields. The tool helps structure your post with SEO in mind, including a catchy title, keyword-rich descriptions (derived from your input), and a clear heading structure (H1, H2, H3).</p>
-            
-            <h3>Output Format You Can Expect:</h3>
-            <ul>
-                <li><strong>Title:</strong> Catchy and designed to be keyword-rich. We aim for a length that's generally good for SEO (around 50-70 characters based on your input).</li>
-                <li><strong>Introduction:</strong> A brief description of the problem or topic (target 100-150 words), outlining the post's purpose, often using your primary keywords.</li>
-                <li><strong>Body:</strong> Detailed information structured with H2 and H3 subheadings for readability and SEO. The placeholder content will include bullet points if relevant to the structure.</li>
-                <li><strong>Conclusion:</strong> A summary of the key takeaways (around 100 words) and often a placeholder for a call to action.</li>
-            </ul>
-            
-            <p><strong>Usage Tips:</strong> For the best results, provide a clear and detailed prompt. Specify your primary and any secondary keywords. The more specific your input, the more tailored the draft will be. Crucially, review and personalize the output to ensure it meets your exact needs, reflects your expertise, and adheres to Google's E-A-T (Expertise, Authoritativeness, Trustworthiness) guidelines.</p>
-            
-            <p><strong>Monetization & Google Guidelines:</strong> The generated structure is designed to allow for natural placement of affiliate links and ad spaces. However, always ensure your final, published content adheres to Google's guidelines, particularly regarding helpful content, E-A-T, and avoiding anything that could be construed as AI spam or clickbait. Your personal touch is key!</p>
-        </section>
-
-        <section id="other-tools-section" class="animate-on-scroll">
-            <h2>More Awesome Tools</h2>
-            <div class="tools-grid">
-
-                <!-- Love Calculator -->
-                <div class="tool-card" id="love-calculator">
-                    <h3>Love Calculator</h3>
-                    <label for="love-name1">Your Name:</label>
-                    <input type="text" id="love-name1" placeholder="Enter your name">
-                    <label for="love-name2">Partner's Name:</label>
-                    <input type="text" id="love-name2" placeholder="Enter partner's name">
-                    <button class="button" id="calculate-love">Calculate Love</button>
-                    <div id="love-result" class="tool-output"></div>
-                </div>
-
-                <!-- Age Calculator -->
-                <div class="tool-card" id="age-calculator">
-                    <h3>Age Calculator</h3>
-                    <label for="age-dob">Date of Birth:</label>
-                    <input type="date" id="age-dob">
-                    <button class="button" id="calculate-age">Calculate Age</button>
-                    <div id="age-result" class="tool-output"></div>
-                </div>
-
-                <!-- Voice to Text Converter -->
-                <div class="tool-card" id="voice-to-text">
-                    <h3>Voice to Text Converter</h3>
-                    <button class="button" id="vtt-start-btn">Start Listening</button>
-                    <div id="vtt-status" class="tool-status"></div>
-                    <textarea id="vtt-output" rows="5" placeholder="Converted text will appear here..."></textarea>
-                </div>
-
-                <!-- Salary Calculator -->
-                <div class="tool-card" id="salary-calculator">
-                    <h3>Salary Calculator</h3>
-                    <label for="salary-hourly-rate">Hourly Rate ($):</label>
-                    <input type="number" id="salary-hourly-rate" placeholder="e.g., 20">
-                    <label for="salary-hours-week">Hours per Week:</label>
-                    <input type="number" id="salary-hours-week" value="40">
-                    <button class="button" id="salary-calculate-btn">Calculate Salary</button>
-                    <div id="salary-result" class="tool-output"></div>
-                </div>
-
-                <!-- Plagiarism Checker -->
-                <div class="tool-card" id="plagiarism-checker">
-                    <h3>Plagiarism Checker</h3>
-                    <textarea id="plagiarism-text" rows="5" placeholder="Paste text here to learn about plagiarism checking..."></textarea>
-                    <button class="button" id="plagiarism-check-btn">Learn More About Plagiarism Checks</button>
-                    <div id="plagiarism-result" class="tool-output">
-                        <p>Enter text above and click the button to understand how plagiarism checking works.</p>
-                    </div>
-                </div>
-
-                <!-- SEO Audit Tool -->
-                <div class="tool-card" id="seo-audit-tool">
-                    <h3>SEO Audit Tool</h3>
-                    <label for="seo-url-input">Website URL:</label>
-                    <input type="url" id="seo-url-input" placeholder="https://example.com">
-                    <button class="button" id="seo-audit-btn">Learn About SEO Audits</button>
-                    <div id="seo-audit-result" class="tool-output">
-                        <p>Enter a URL and click the button to understand what a typical SEO audit involves.</p>
-                    </div>
-                </div>
-
-                <!-- YOUTUBE AI TOOL -->
-                <div class="tool-card" id="youtube-ai-tool">
-                    <h3>YOUTUBE AI TOOL</h3>
-                    <label for="youtube-url-input">Video Link/Topic:</label>
-                    <input type="text" id="youtube-url-input" placeholder="Enter YouTube Video URL or Topic">
-                    <button class="button" id="youtube-ai-btn">Learn About YouTube AI Analysis</button>
-                    <div id="youtube-ai-result" class="tool-output">
-                        <p>Enter a video URL/topic and click to learn what AI analysis for YouTube content could involve.</p>
-                    </div>
-                </div>
-
-                <!-- Keyword Research Tool -->
-                <div class="tool-card" id="keyword-research-tool">
-                    <h3>Keyword Research Tool</h3>
-                    <label for="keyword-input">Seed Keyword:</label>
-                    <input type="text" id="keyword-input" placeholder="Enter a seed keyword">
-                    <button class="button" id="keyword-research-btn">Learn About Keyword Research</button>
-                    <div id="keyword-research-result" class="tool-output">
-                        <p>Enter a seed keyword and click to learn what keyword research involves.</p>
-                    </div>
-                </div>
-
-                <!-- WordPad - Online Text Editor -->
-                <div class="tool-card" id="wordpad-editor">
-                    <h3>WordPad - Online Text Editor</h3>
-                    <textarea id="wordpad-textarea" rows="10" placeholder="Start typing here..."></textarea>
-                    <div id="wordpad-stats" class="tool-status">Chars: 0 | Words: 0 | Lines: 0</div>
-                    <div class="wordpad-buttons">
-                        <button class="button" id="wordpad-clear-btn">Clear Text</button>
-                        <button class="button" id="wordpad-copy-btn">Copy Text</button>
-                    </div>
-                </div>
-
-                <!-- GST Calculator -->
-                <div class="tool-card" id="gst-calculator">
-                    <h3>GST Calculator</h3>
-                    <label for="gst-amount">Amount (Pre-GST):</label>
-                    <input type="number" id="gst-amount" placeholder="1000">
-                    <label for="gst-rate">GST Rate (%):</label>
-                    <input type="number" id="gst-rate" placeholder="18">
-                    <button class="button" id="gst-calculate-btn">Calculate GST</button>
-                    <div id="gst-result" class="tool-output"></div>
-                </div>
-
-                <!-- Loan Calculator -->
-                <div class="tool-card" id="loan-calculator">
-                    <h3>Loan Calculator</h3>
-                    <label for="loan-principal">Principal Amount:</label>
-                    <input type="number" id="loan-principal" placeholder="100000">
-                    <label for="loan-rate">Annual Interest Rate (%):</label>
-                    <input type="number" id="loan-rate" placeholder="7.5">
-                    <label for="loan-tenure-years">Loan Tenure (Years):</label>
-                    <input type="number" id="loan-tenure-years" placeholder="5">
-                    <button class="button" id="loan-calculate-btn">Calculate EMI</button>
-                    <div id="loan-result" class="tool-output"></div>
-                </div>
-
-                <!-- Discount Calculator -->
-                <div class="tool-card" id="discount-calculator">
-                    <h3>Discount Calculator</h3>
-                    <label for="discount-original-price">Original Price:</label>
-                    <input type="number" id="discount-original-price" placeholder="e.g., 100">
-                    <label for="discount-percentage-input">Discount (%):</label>
-                    <input type="number" id="discount-percentage-input" placeholder="e.g., 20">
-                    <button class="button" id="discount-calculate-btn">Calculate Discount</button>
-                    <div id="discount-result" class="tool-output"></div>
-                </div>
-
-            </div> <!-- end .tools-grid -->
-        </section>
+            <div id="amortizationScheduleContainer" style="display: none;">
+                <h3>Amortization Schedule</h3>
+                <div id="tablePlaceholder"></div> <!-- New placeholder for the table -->
+            </div>
+        </div>
     </main>
-
     <footer>
-        <p>&copy; 2023 SOLVEiT PRO. All rights reserved.</p>
+        <p><a href="javascript:void(0);" data-modal-target="privacyPolicyModal">Privacy Policy</a> | <a href="javascript:void(0);" data-modal-target="termsOfServiceModal">Terms of Service</a></p>
+        <p>&copy; 2024 SOLVEiT PRO. All Rights Reserved.</p>
     </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Get DOM Element References
+            const loanAmountInput = document.getElementById('loanAmount');
+            const interestRateInput = document.getElementById('interestRate');
+            const loanTenureInput = document.getElementById('loanTenure');
+            const tenureTypeSelect = document.getElementById('tenureType');
+            const calculateButton = document.getElementById('calculateButton');
+            const monthlyEmiResultSpan = document.getElementById('monthlyEmiResult');
+            const totalInterestResultSpan = document.getElementById('totalInterestResult');
+            const totalAmountResultSpan = document.getElementById('totalAmountResult');
+            const loanCalculatorForm = document.getElementById('loanCalculatorForm');
+            const amortizationScheduleContainer = document.getElementById('amortizationScheduleContainer');
+            const tablePlaceholder = document.getElementById('tablePlaceholder'); // Placeholder for the table
+            const loanPieChart = document.getElementById('loanPieChart');
+            const chartLegend = document.getElementById('chartLegend');
 
-    <script src="script.js"></script>
+            // Calculation Function
+            function calculateAndDisplayResults() {
+                // Clear previous results and hide amortization schedule
+                monthlyEmiResultSpan.textContent = '-';
+                totalInterestResultSpan.textContent = '-';
+                totalAmountResultSpan.textContent = '-';
+                tablePlaceholder.innerHTML = ''; // Clear previous table
+                amortizationScheduleContainer.style.display = 'none'; // Hide container
+                loanPieChart.style.backgroundImage = 'none'; // Clear pie chart
+                chartLegend.innerHTML = ''; // Clear chart legend
+                // Retrieve and Validate Inputs
+                const principal = parseFloat(loanAmountInput.value);
+                const annualInterestRate = parseFloat(interestRateInput.value);
+                let loanTenure = parseFloat(loanTenureInput.value);
+
+                if (isNaN(principal) || principal <= 0 ||
+                    isNaN(annualInterestRate) || annualInterestRate < 0 || // Allow 0% interest
+                    isNaN(loanTenure) || loanTenure <= 0) {
+                    alert("Please enter valid positive numbers for Loan Amount and Loan Tenure. Interest rate must be zero or positive.");
+                    // Results are already cleared above, and schedule hidden
+                    return;
+                }
+
+                // Calculate Tenure in Months
+                let tenureInMonths = loanTenure;
+                if (tenureTypeSelect.value === "years") {
+                    tenureInMonths = loanTenure * 12;
+                }
+
+                // Calculate Monthly Interest Rate
+                const monthlyInterestRate = annualInterestRate / 12 / 100;
+
+                // EMI Calculation (M)
+                let monthlyEmi;
+                if (monthlyInterestRate === 0) { // Interest-free loan
+                    monthlyEmi = principal / tenureInMonths;
+                } else {
+                    monthlyEmi = principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, tenureInMonths) / (Math.pow(1 + monthlyInterestRate, tenureInMonths) - 1);
+                }
+
+                // Calculate Total Amount Payable
+                const totalAmountPayable = monthlyEmi * tenureInMonths;
+
+                // Calculate Total Interest Payable
+                const totalInterestPayable = totalAmountPayable - principal;
+
+                // Display Results
+                monthlyEmiResultSpan.textContent = `₹ ${monthlyEmi.toFixed(2)}`;
+                totalInterestResultSpan.textContent = `₹ ${totalInterestPayable.toFixed(2)}`;
+                totalAmountResultSpan.textContent = `₹ ${totalAmountPayable.toFixed(2)}`;
+                
+                generateAndDisplayAmortization(principal, monthlyInterestRate, tenureInMonths, monthlyEmi);
+                amortizationScheduleContainer.style.display = 'block'; // Show container
+
+                // Pie Chart Logic
+                if (totalAmountPayable > 0) {
+                    const principalPercentage = (principal / totalAmountPayable) * 100;
+                    const interestPercentage = (totalInterestPayable / totalAmountPayable) * 100;
+
+                    let principalDisplayPercentage = principalPercentage;
+                    let interestDisplayPercentage = interestPercentage;
+
+                    if (totalInterestPayable <= 0) { // Handles 0% interest or negligible interest
+                        principalDisplayPercentage = 100;
+                        interestDisplayPercentage = 0;
+                        loanPieChart.style.backgroundImage = `conic-gradient(#2ecc71 0%, #2ecc71 100%)`;
+                    } else if (principal <= 0) { // Should ideally not happen with validation
+                        principalDisplayPercentage = 0;
+                        interestDisplayPercentage = 100;
+                        loanPieChart.style.backgroundImage = `conic-gradient(#e74c3c 0%, #e74c3c 100%)`;
+                    } else {
+                        loanPieChart.style.backgroundImage = `conic-gradient(#2ecc71 0%, #2ecc71 ${principalPercentage.toFixed(2)}%, #e74c3c ${principalPercentage.toFixed(2)}%, #e74c3c 100%)`;
+                    }
+
+                    // Populate Legend
+                    chartLegend.innerHTML = ''; // Clear previous legend items
+
+                    const principalLegend = document.createElement('div');
+                    principalLegend.classList.add('legend-item');
+                    principalLegend.innerHTML = `<span class="legend-color-box" style="background-color: #2ecc71;"></span> Principal: ₹${principal.toFixed(2)} (${principalDisplayPercentage.toFixed(1)}%)`;
+                    chartLegend.appendChild(principalLegend);
+
+                    if (interestDisplayPercentage > 0) { // Only show interest legend if there's interest
+                        const interestLegend = document.createElement('div');
+                        interestLegend.classList.add('legend-item');
+                        interestLegend.innerHTML = `<span class="legend-color-box" style="background-color: #e74c3c;"></span> Total Interest: ₹${totalInterestPayable.toFixed(2)} (${interestDisplayPercentage.toFixed(1)}%)`;
+                        chartLegend.appendChild(interestLegend);
+                    }
+                } else { // Handles case where totalAmountPayable might be zero (e.g. zero principal)
+                    loanPieChart.style.backgroundImage = 'none';
+                    chartLegend.innerHTML = '';
+                }
+            }
+
+            function generateAndDisplayAmortization(principal, monthlyInterestRate, tenureInMonths, monthlyEmi) {
+                tablePlaceholder.innerHTML = ''; // Clear any existing table
+
+                const table = document.createElement('table');
+                table.classList.add('amortization-table');
+
+                // Create Table Head
+                const thead = table.createTHead();
+                const headerRow = thead.insertRow();
+                const headers = ["Month", "Principal Paid", "Interest Paid", "Total Payment", "Remaining Balance"];
+                headers.forEach(headerText => {
+                    const th = document.createElement('th');
+                    th.textContent = headerText;
+                    headerRow.appendChild(th);
+                });
+
+                // Create Table Body
+                const tbody = table.createTBody();
+                let remainingBalance = principal;
+
+                for (let month = 1; month <= tenureInMonths; month++) {
+                    const interestForMonth = monthlyInterestRate === 0 ? 0 : remainingBalance * monthlyInterestRate;
+                    let principalPaidForMonth = monthlyEmi - interestForMonth;
+                    
+                    // Adjustments for the last month to ensure balance is zero
+                    if (month === tenureInMonths) {
+                        if (remainingBalance - principalPaidForMonth < 0.01 && remainingBalance - principalPaidForMonth > -0.01) { // Small discrepancy
+                             principalPaidForMonth = remainingBalance; // Ensure remaining balance becomes exactly 0
+                        }
+                         // If interest is 0, EMI is P/N, so principal paid is EMI, remaining balance naturally goes to 0.
+                        if (monthlyInterestRate > 0 && (principalPaidForMonth > remainingBalance)) {
+                            principalPaidForMonth = remainingBalance;
+                        }
+                    }
+                    
+                    const actualMonthlyPayment = principalPaidForMonth + interestForMonth;
+                    remainingBalance -= principalPaidForMonth;
+
+                    if (remainingBalance < 0) { // Safety net, should ideally be handled by last month adjustment
+                        remainingBalance = 0;
+                    }
+
+                    const row = tbody.insertRow();
+                    const cells = [
+                        month,
+                        `₹ ${principalPaidForMonth.toFixed(2)}`,
+                        `₹ ${interestForMonth.toFixed(2)}`,
+                        `₹ ${actualMonthlyPayment.toFixed(2)}`, // Use actual calculated payment for the month
+                        `₹ ${remainingBalance.toFixed(2)}`
+                    ];
+
+                    cells.forEach(cellData => {
+                        const cell = row.insertCell();
+                        cell.textContent = cellData;
+                    });
+                }
+                tablePlaceholder.appendChild(table);
+            }
+
+            // Event Listeners
+            calculateButton.addEventListener('click', calculateAndDisplayResults);
+
+            loanCalculatorForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent actual form submission
+                calculateAndDisplayResults();
+            });
+
+            // Modal Toggle Logic
+            const modalTriggers = document.querySelectorAll('[data-modal-target]');
+            const closeButtons = document.querySelectorAll('.close-modal-btn');
+
+            modalTriggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const modalId = trigger.getAttribute('data-modal-target');
+                    const modal = document.getElementById(modalId);
+                    if (modal) {
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+
+            closeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modal = button.closest('.legal-modal');
+                    if (modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+
+            // Close modal if user clicks outside of the modal content
+            window.addEventListener('click', (event) => {
+                document.querySelectorAll('.legal-modal').forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+
+    <div id="privacyPolicyModal" class="legal-modal">
+        <div class="legal-modal-content">
+            <span class="close-modal-btn" data-modal-id="privacyPolicyModal">&times;</span>
+            <h2>Privacy Policy</h2>
+            <p>This is a placeholder for the Privacy Policy of SOLVEiT PRO. Replace this text with your actual Privacy Policy.</p>
+            <p><strong>Information We Collect:</strong> We currently do not collect any personal data as all calculations are performed on your device.</p>
+            <p><strong>How We Use Information:</strong> Not applicable as no data is collected.</p>
+            <p><strong>Changes to This Policy:</strong> We may update this policy in the future. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
+        </div>
+    </div>
+
+    <div id="termsOfServiceModal" class="legal-modal">
+        <div class="legal-modal-content">
+            <span class="close-modal-btn" data-modal-id="termsOfServiceModal">&times;</span>
+            <h2>Terms of Service</h2>
+            <p>This is a placeholder for the Terms of Service for SOLVEiT PRO. Replace this text with your actual Terms of Service.</p>
+            <p><strong>Acceptance of Terms:</strong> By using this website, you agree to be bound by these Terms of Service.</p>
+            <p><strong>Use of Service:</strong> SOLVEiT PRO is provided for informational and calculation purposes only. We are not responsible for any errors or omissions, or for any actions taken based on the information provided by this tool.</p>
+            <p><strong>Disclaimer of Warranties:</strong> This service is provided "as is" without any warranties of any kind.</p>
+        </div>
+    </div>
 </body>
 </html>
