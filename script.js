@@ -2,50 +2,148 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleForm = document.getElementById('article-form');
     const articleOutputDiv = document.getElementById('generated-article-output');
 
+    // Helper function to generate placeholder text
+    function generatePlaceholderText(numWords, seedKeyword = '') {
+        const loremIpsumWords = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum".split(" ");
+        let text = [];
+        if (seedKeyword) {
+            text.push(seedKeyword.charAt(0).toUpperCase() + seedKeyword.slice(1)); // Start with the keyword
+        }
+        for (let i = text.length; i < numWords; i++) {
+            text.push(loremIpsumWords[Math.floor(Math.random() * loremIpsumWords.length)]);
+        }
+        let output = text.join(" ");
+        // Ensure it ends with a period and is roughly the right length.
+        if (output.length > 0 && !['.', '!', '?'].includes(output.charAt(output.length - 1))) {
+            output += '.';
+        }
+        return output;
+    }
+
+
     if (articleForm) {
         articleForm.addEventListener('submit', (event) => {
             event.preventDefault();
 
             // Get values from input fields
-            const prompt = document.getElementById('prompt').value;
-            const primaryKeywords = document.getElementById('primary-keywords').value;
-            const secondaryKeywords = document.getElementById('secondary-keywords').value; // Though not used in placeholder, good to fetch
-            const wordCount = document.getElementById('word-count').value; // Same as above
+            const promptText = document.getElementById('prompt').value.trim();
+            const primaryKeywords = document.getElementById('primary-keywords').value.trim();
+            const secondaryKeywords = document.getElementById('secondary-keywords').value.trim();
+            const wordCount = parseInt(document.getElementById('word-count').value) || 1000;
 
-            // Clear previous content
-            articleOutputDiv.innerHTML = '<p>Generating your article...</p>';
+            articleOutputDiv.innerHTML = '<p class="generating-message">Generating your enhanced article structure...</p>';
 
-            // Basic Article Structure Generation (Placeholder Content)
-            let articleHTML = '';
+            // --- 1. Title Generation ---
+            let title = `Your Comprehensive Guide to ${primaryKeywords || 'the Main Topic'}`;
+            if (promptText.length > 10 && !primaryKeywords) { // Use prompt if no primary keyword and prompt is somewhat descriptive
+                title = promptText.split(' ').slice(0, 8).join(' ') + "..."; // First 8 words of prompt
+            }
+            if (title.length > 70) title = title.substring(0, 67) + "..."; // Aim for ~60-70 chars
 
-            // 1. Catchy Title
-            articleHTML += `<h1>Your Awesome Article on ${primaryKeywords || 'Your Topic'}</h1>`;
+            // --- 2. Meta Description Generation ---
+            let metaDescription = `Discover everything you need to know about ${primaryKeywords || 'this important subject'}. ${promptText.substring(0, 155 - (primaryKeywords ? primaryKeywords.length : 25) - 25 )}`;
+            if (metaDescription.length > 160) metaDescription = metaDescription.substring(0, 157) + "...";
 
-            // 2. Introduction
-            articleHTML += `<p class="introduction">This article will discuss "${prompt || 'the specified topic'}" in detail, focusing on ${primaryKeywords || 'key aspects'}. It aims to provide comprehensive insights for an approximate length of ${wordCount} words.</p>`;
+            // --- 3. URL Slug Generation ---
+            let slug = title.toLowerCase()
+                            .replace(/\s+/g, '-')         // Replace spaces with -
+                            .replace(/[^\w-]+/g, '')    // Remove all non-word chars
+                            .replace(/--+/g, '-')       // Replace multiple - with single -
+                            .replace(/^-+/, '')          // Trim - from start of text
+                            .replace(/-+$/, '');         // Trim - from end of text
+            if (slug.length > 50) slug = slug.substring(0, 50);
 
-            // 3. Body Section
-            articleHTML += `<h2>Understanding ${primaryKeywords || 'the Core Subject'}</h2>`;
-            articleHTML += `<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>`;
+
+            let articleHTML = `<div class="seo-preview-output">
+                                <h3>SEO Preview</h3>
+                                <p><strong>Title:</strong> ${title}</p>
+                                <div class="meta-description-preview"><strong>Meta Description:</strong> ${metaDescription}</div>
+                                <div class="slug-preview"><strong>Slug:</strong> /${slug}</div>
+                               </div>`;
             
-            articleHTML += `<h3>Key Aspects of ${secondaryKeywords || primaryKeywords || 'This Topic'}</h3>`;
-            articleHTML += `<ul><li>Relevant point one, perhaps related to ${secondaryKeywords || 'a secondary concept'}.</li><li>Another important detail.</li><li>Further exploration of the subject.</li></ul>`;
-            articleHTML += `<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>`;
+            articleHTML += `<div class="generated-article-content"><h3>Generated Article Draft</h3>`;
 
-            articleHTML += `<h2>Further Details and Analysis</h2>`;
-            articleHTML += `<p>Phasellus egestas tellus rutrum tellus pellentesque eu tincidunt tortor aliquam. Nulla facilisi. Cras fermentum odio eu feugiat pretium.</p>`;
+            // --- Main Article H1 (using the generated title) ---
+            articleHTML += `<h1>${title}</h1>`;
 
-            // 4. Conclusion
-            articleHTML += `<p class="conclusion">In summary, ${primaryKeywords || 'this subject'} is very important and offers much to consider. We hope this guide, focusing on "${prompt || 'your query'}", was helpful! Please share and comment.</p>`;
+            // --- 4. Introduction (100-150 words) ---
+            articleHTML += `<p class="introduction">This post dives deep into the topic of "${promptText || 'your specified subject'}". We will explore the key aspects of ${primaryKeywords || 'this area'}, including insights into ${secondaryKeywords || 'related concepts'}. Our goal is to provide a comprehensive overview to help you understand its importance and potential applications. ${generatePlaceholderText(80, primaryKeywords)}</p>`;
+            articleHTML += `<p>${generatePlaceholderText(60, secondaryKeywords)}</p>`;
+
+            // --- 5. Body ---
+            articleHTML += `<h2>Understanding ${primaryKeywords || 'the Core Subject'} in Depth</h2>`;
+            articleHTML += `<p>${generatePlaceholderText(100, primaryKeywords)}</p>`;
+            articleHTML += `<p>${generatePlaceholderText(120)}</p>`;
+
+            articleHTML += `<h3>Key Benefits of ${secondaryKeywords || primaryKeywords}</h3>`;
+            articleHTML += `<ul>
+                                <li>Benefit 1: ${generatePlaceholderText(10, secondaryKeywords)}.</li>
+                                <li>Benefit 2: ${generatePlaceholderText(12)}.</li>
+                                <li>Benefit 3: ${generatePlaceholderText(15, primaryKeywords)}.</li>
+                            </ul>`;
+            articleHTML += `<p>${generatePlaceholderText(80)}</p>`;
+
+            articleHTML += `<h2>Exploring Applications of ${primaryKeywords}</h2>`;
+            articleHTML += `<p>${generatePlaceholderText(100, secondaryKeywords)}</p>`;
+            
+            // --- 6. Image Optimization Placeholder ---
+            articleHTML += `<div class="image-placeholder">
+                                <h4>Image Placeholder & Optimization Tip</h4>
+                                <p><strong>Visual Content Suggestion:</strong> Include a relevant, high-quality image here that visually represents ${primaryKeywords || 'the main topic'}.</p>
+                                <p><strong>Alt Text Example:</strong> "A clear visual explaining ${primaryKeywords || 'the core concept discussed'}"</p>
+                                <p><em>(Remember to use descriptive alt text for accessibility and SEO, and optimize image file sizes.)</em></p>
+                            </div>`;
+            
+            articleHTML += `<p>${generatePlaceholderText(100)}</p>`;
+
+            articleHTML += `<h3>Further Considerations for ${secondaryKeywords || 'Advanced Users'}</h3>`;
+            articleHTML += `<p>${generatePlaceholderText(150, secondaryKeywords)}</p>`;
+
+            // --- 7. Conclusion (approx 100 words) ---
+            articleHTML += `<h2 class="conclusion-heading">Conclusion</h2>`;
+            articleHTML += `<p class="conclusion">In summary, ${primaryKeywords || 'this topic'} offers a wealth of insights and opportunities. We've touched upon its fundamental aspects, key benefits, and potential applications, including how ${secondaryKeywords || 'related factors'} play a role. ${generatePlaceholderText(50, primaryKeywords)} We encourage you to share your thoughts, questions, or experiences in the comments below. Your engagement helps us all learn more!</p>`;
+            
+            articleHTML += `</div>`; // End .generated-article-content
 
             // Simulate a delay for "generation" then display
+            articleOutputDiv.classList.remove('visible'); // Reset animation state
+
             setTimeout(() => {
                 articleOutputDiv.innerHTML = articleHTML;
-            }, 1000); // 1 second delay
+                // Timeout to allow DOM update before adding class for animation
+                setTimeout(() => { 
+                    articleOutputDiv.classList.add('visible');
+                }, 50); 
+            }, 1000); // 1 second delay for "generating" message
         });
     } else {
         console.error('Article form not found!');
     }
+
+    // --- Intersection Observer for Scroll Animations ---
+    const observerOptions = {
+        root: null, // Use the viewport as the root
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% of the element is visible
+    };
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in-up-element'); // Use the slide-up animation
+                observer.unobserve(entry.target); // Stop observing once animated
+            }
+        });
+    };
+
+    const scrollObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+    const elementsToAnimate = document.querySelectorAll('.animate-on-scroll, .tool-card');
+    elementsToAnimate.forEach(el => {
+        scrollObserver.observe(el);
+    });
+    // --- End Intersection Observer ---
+
 
     // --- Love Calculator ---
     const loveName1Input = document.getElementById('love-name1');
@@ -362,4 +460,185 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Keyword Research Tool elements not found!');
     }
     // --- End Keyword Research Tool ---
+
+    // --- WordPad - Online Text Editor ---
+    const wordpadTextarea = document.getElementById('wordpad-textarea');
+    const wordpadStatsDiv = document.getElementById('wordpad-stats');
+    const wordpadClearBtn = document.getElementById('wordpad-clear-btn');
+    const wordpadCopyBtn = document.getElementById('wordpad-copy-btn');
+
+    function updateWordpadStats() {
+        if (!wordpadTextarea || !wordpadStatsDiv) return;
+
+        const text = wordpadTextarea.value;
+        const charCount = text.length;
+        const wordCount = text.split(/\s+/).filter(Boolean).length;
+        const lineCount = text ? text.split('\n').length : 0;
+
+        wordpadStatsDiv.textContent = `Chars: ${charCount} | Words: ${wordCount} | Lines: ${lineCount}`;
+    }
+
+    if (wordpadTextarea) {
+        wordpadTextarea.addEventListener('input', updateWordpadStats);
+        // Initial stats update in case there's pre-filled text (though placeholder won't trigger this)
+        updateWordpadStats(); 
+    }
+
+    if (wordpadClearBtn) {
+        wordpadClearBtn.addEventListener('click', () => {
+            if (wordpadTextarea) {
+                wordpadTextarea.value = '';
+                updateWordpadStats(); // Update stats after clearing
+            }
+        });
+    }
+
+    if (wordpadCopyBtn) {
+        wordpadCopyBtn.addEventListener('click', () => {
+            if (wordpadTextarea && wordpadTextarea.value) {
+                navigator.clipboard.writeText(wordpadTextarea.value)
+                    .then(() => {
+                        wordpadCopyBtn.textContent = 'Copied!';
+                        setTimeout(() => {
+                            wordpadCopyBtn.textContent = 'Copy Text';
+                        }, 1500);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy text: ', err);
+                        wordpadStatsDiv.textContent = 'Error: Could not copy text.'; // Show error in stats
+                        setTimeout(() => {
+                            updateWordpadStats(); // Revert stats div after a delay
+                        }, 2000);
+                    });
+            } else {
+                wordpadCopyBtn.textContent = 'Nothing to Copy';
+                 setTimeout(() => {
+                            wordpadCopyBtn.textContent = 'Copy Text';
+                        }, 1500);
+            }
+        });
+    }
+    
+    if (!wordpadTextarea || !wordpadStatsDiv || !wordpadClearBtn || !wordpadCopyBtn) {
+        console.error('Some WordPad elements might be missing!');
+    }
+    // --- End WordPad - Online Text Editor ---
+
+    // --- GST Calculator ---
+    const gstAmountInput = document.getElementById('gst-amount');
+    const gstRateInput = document.getElementById('gst-rate');
+    const gstCalculateBtn = document.getElementById('gst-calculate-btn');
+    const gstResultDiv = document.getElementById('gst-result');
+
+    if (gstCalculateBtn) {
+        gstCalculateBtn.addEventListener('click', () => {
+            const amount = parseFloat(gstAmountInput.value);
+            const rate = parseFloat(gstRateInput.value);
+
+            if (isNaN(amount) || amount < 0 || isNaN(rate) || rate < 0 || rate > 100) {
+                gstResultDiv.innerHTML = '<p class="error">Please enter valid positive numbers. Rate should be between 0 and 100.</p>';
+                return;
+            }
+
+            const gstAmount = (amount * rate) / 100;
+            const totalAmount = amount + gstAmount;
+
+            // Format as currency or fixed decimal points
+            const formatNumber = (num) => num.toFixed(2);
+
+            gstResultDiv.innerHTML = `
+                <p>Original Amount: <strong>${formatNumber(amount)}</strong></p>
+                <p>GST Rate: <strong>${rate}%</strong></p>
+                <hr class="tool-hr">
+                <p>GST Amount: <strong>${formatNumber(gstAmount)}</strong></p>
+                <p class="total-amount">Total Amount (incl. GST): <strong>${formatNumber(totalAmount)}</strong></p>
+            `;
+        });
+    } else {
+        console.error('GST Calculator elements not found!');
+    }
+    // --- End GST Calculator ---
+
+    // --- Loan Calculator (EMI) ---
+    const loanPrincipalInput = document.getElementById('loan-principal');
+    const loanRateInput = document.getElementById('loan-rate');
+    const loanTenureYearsInput = document.getElementById('loan-tenure-years');
+    const loanCalculateBtn = document.getElementById('loan-calculate-btn');
+    const loanResultDiv = document.getElementById('loan-result');
+
+    if (loanCalculateBtn) {
+        loanCalculateBtn.addEventListener('click', () => {
+            const principal = parseFloat(loanPrincipalInput.value);
+            const annualRate = parseFloat(loanRateInput.value);
+            const tenureYears = parseFloat(loanTenureYearsInput.value);
+
+            if (isNaN(principal) || principal <= 0 ||
+                isNaN(annualRate) || annualRate < 0 || // Allow 0 rate
+                isNaN(tenureYears) || tenureYears <= 0) {
+                loanResultDiv.innerHTML = '<p class="error">Please enter valid positive numbers for all fields.</p>';
+                return;
+            }
+
+            const monthlyRate = annualRate / (12 * 100);
+            const tenureMonths = tenureYears * 12;
+
+            let emi;
+            if (monthlyRate === 0) {
+                emi = principal / tenureMonths;
+            } else {
+                const powerTerm = Math.pow(1 + monthlyRate, tenureMonths);
+                emi = (principal * monthlyRate * powerTerm) / (powerTerm - 1);
+            }
+
+            const totalAmountPayable = emi * tenureMonths;
+            const totalInterestPayable = totalAmountPayable - principal;
+
+            const formatCurrency = (num) => num.toFixed(2); // Using toFixed(2) for now, Intl.NumberFormat can be used too
+
+            loanResultDiv.innerHTML = `
+                <p>Monthly EMI: <strong>${formatCurrency(emi)}</strong></p>
+                <hr class="tool-hr">
+                <p>Total Interest Payable: <strong>${formatCurrency(totalInterestPayable)}</strong></p>
+                <p class="total-amount">Total Amount Payable: <strong>${formatCurrency(totalAmountPayable)}</strong></p>
+            `;
+        });
+    } else {
+        console.error('Loan Calculator elements not found!');
+    }
+    // --- End Loan Calculator (EMI) ---
+
+    // --- Discount Calculator ---
+    const discountOriginalPriceInput = document.getElementById('discount-original-price');
+    const discountPercentageInput = document.getElementById('discount-percentage-input');
+    const discountCalculateBtn = document.getElementById('discount-calculate-btn');
+    const discountResultDiv = document.getElementById('discount-result');
+
+    if (discountCalculateBtn) {
+        discountCalculateBtn.addEventListener('click', () => {
+            const originalPrice = parseFloat(discountOriginalPriceInput.value);
+            const discountPercentage = parseFloat(discountPercentageInput.value);
+
+            if (isNaN(originalPrice) || originalPrice < 0 ||
+                isNaN(discountPercentage) || discountPercentage < 0 || discountPercentage > 100) {
+                discountResultDiv.innerHTML = '<p class="error">Please enter a valid original price and a discount percentage between 0 and 100.</p>';
+                return;
+            }
+
+            const amountSaved = (originalPrice * discountPercentage) / 100;
+            const finalPrice = originalPrice - amountSaved;
+
+            const formatCurrency = (num) => num.toFixed(2);
+
+            discountResultDiv.innerHTML = `
+                <p>Original Price: <strong>${formatCurrency(originalPrice)}</strong></p>
+                <p>Discount: <strong>${discountPercentage}%</strong></p>
+                <hr class="tool-hr">
+                <p>Amount Saved: <strong>${formatCurrency(amountSaved)}</strong></p>
+                <p class="total-amount">Final Price: <strong>${formatCurrency(finalPrice)}</strong></p>
+            `;
+        });
+    } else {
+        console.error('Discount Calculator elements not found!');
+    }
+    // --- End Discount Calculator ---
 });

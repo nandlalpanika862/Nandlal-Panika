@@ -15,7 +15,7 @@
     </header>
 
     <main>
-        <section id="article-generator-section">
+        <section id="article-generator-section" class="animate-on-scroll">
             <h2>Create Your High-Quality Article</h2>
             <form id="article-form">
                 <div>
@@ -41,7 +41,7 @@
             </div>
         </section>
 
-        <section id="important-info-section">
+        <section id="important-info-section" class="animate-on-scroll">
             <h2>About Your AI Article Assistant</h2>
             <p><strong>Purpose:</strong> This tool is designed to help you generate high-quality, unique, and SEO-optimized blog posts quickly and efficiently. It's your assistant for drafting content, which you can then refine and personalize.</p>
             
@@ -62,7 +62,7 @@
             <p><strong>Monetization & Google Guidelines:</strong> The generated structure is designed to allow for natural placement of affiliate links and ad spaces. However, always ensure your final, published content adheres to Google's guidelines, particularly regarding helpful content, E-A-T, and avoiding anything that could be construed as AI spam or clickbait. Your personal touch is key!</p>
         </section>
 
-        <section id="other-tools-section">
+        <section id="other-tools-section" class="animate-on-scroll">
             <h2>More Awesome Tools</h2>
             <div class="tools-grid">
 
@@ -151,9 +151,12 @@
                 <!-- WordPad - Online Text Editor -->
                 <div class="tool-card" id="wordpad-editor">
                     <h3>WordPad - Online Text Editor</h3>
-                    <textarea id="wordpad-text-area" rows="8" placeholder="Start typing..."></textarea>
-                    <button class="button" id="save-wordpad">Save Text</button>
-                    <button class="button" id="clear-wordpad">Clear Text</button>
+                    <textarea id="wordpad-textarea" rows="10" placeholder="Start typing here..."></textarea>
+                    <div id="wordpad-stats" class="tool-status">Chars: 0 | Words: 0 | Lines: 0</div>
+                    <div class="wordpad-buttons">
+                        <button class="button" id="wordpad-clear-btn">Clear Text</button>
+                        <button class="button" id="wordpad-copy-btn">Copy Text</button>
+                    </div>
                 </div>
 
                 <!-- GST Calculator -->
@@ -163,7 +166,7 @@
                     <input type="number" id="gst-amount" placeholder="1000">
                     <label for="gst-rate">GST Rate (%):</label>
                     <input type="number" id="gst-rate" placeholder="18">
-                    <button class="button" id="calculate-gst">Calculate GST</button>
+                    <button class="button" id="gst-calculate-btn">Calculate GST</button>
                     <div id="gst-result" class="tool-output"></div>
                 </div>
 
@@ -174,20 +177,20 @@
                     <input type="number" id="loan-principal" placeholder="100000">
                     <label for="loan-rate">Annual Interest Rate (%):</label>
                     <input type="number" id="loan-rate" placeholder="7.5">
-                    <label for="loan-tenure">Tenure (Years):</label>
-                    <input type="number" id="loan-tenure" placeholder="5">
-                    <button class="button" id="calculate-emi">Calculate EMI</button>
+                    <label for="loan-tenure-years">Loan Tenure (Years):</label>
+                    <input type="number" id="loan-tenure-years" placeholder="5">
+                    <button class="button" id="loan-calculate-btn">Calculate EMI</button>
                     <div id="loan-result" class="tool-output"></div>
                 </div>
 
                 <!-- Discount Calculator -->
                 <div class="tool-card" id="discount-calculator">
                     <h3>Discount Calculator</h3>
-                    <label for="original-price">Original Price:</label>
-                    <input type="number" id="original-price" placeholder="200">
-                    <label for="discount-percentage">Discount (%):</label>
-                    <input type="number" id="discount-percentage" placeholder="15">
-                    <button class="button" id="calculate-discount">Calculate Discount</button>
+                    <label for="discount-original-price">Original Price:</label>
+                    <input type="number" id="discount-original-price" placeholder="e.g., 100">
+                    <label for="discount-percentage-input">Discount (%):</label>
+                    <input type="number" id="discount-percentage-input" placeholder="e.g., 20">
+                    <button class="button" id="discount-calculate-btn">Calculate Discount</button>
                     <div id="discount-result" class="tool-output"></div>
                 </div>
 
