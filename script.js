@@ -1,124 +1,151 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const articleForm = document.getElementById('article-form');
-    const articleOutputDiv = document.getElementById('generated-article-output');
+    // --- SOLVEiT PRO Logic ---
+    const solveitForm = document.getElementById('solveit-form');
+    const urlInput = document.getElementById('url-input');
+    const analysisInsightsOutput = document.getElementById('analysis-insights-output');
+    const linkedinPostOutput = document.getElementById('linkedin-post-output')?.querySelector('.post-content');
+    const twitterThreadOutput = document.getElementById('twitter-thread-output')?.querySelector('.post-content');
+    const instagramCaptionOutput = document.getElementById('instagram-caption-output')?.querySelector('.post-content');
+    const blogSummaryOutput = document.getElementById('blog-summary-output')?.querySelector('.post-content');
+    const visualSuggestionsOutput = document.getElementById('visual-suggestions-output')?.querySelector('p');
+    const hashtagSuggestionsOutput = document.getElementById('hashtag-suggestions-output')?.querySelector('p');
 
-    // Helper function to generate placeholder text
-    function generatePlaceholderText(numWords, seedKeyword = '') {
-        const loremIpsumWords = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum".split(" ");
-        let text = [];
-        if (seedKeyword) {
-            text.push(seedKeyword.charAt(0).toUpperCase() + seedKeyword.slice(1)); // Start with the keyword
-        }
-        for (let i = text.length; i < numWords; i++) {
-            text.push(loremIpsumWords[Math.floor(Math.random() * loremIpsumWords.length)]);
-        }
-        let output = text.join(" ");
-        // Ensure it ends with a period and is roughly the right length.
-        if (output.length > 0 && !['.', '!', '?'].includes(output.charAt(output.length - 1))) {
-            output += '.';
-        }
-        return output;
+    function mockUrlAnalysis(url) {
+        // Simulate fetching and analyzing a URL
+        return {
+            mainTopic: "The Impact of AI on Modern Content Creation",
+            keyPoints: [
+                "AI tools can generate draft content quickly.",
+                "Personalization and human oversight remain crucial for quality.",
+                "Ethical AI usage involves transparency and avoiding misinformation.",
+                "AI helps in analyzing trends and audience preferences."
+            ],
+            tone: "Informative & Slightly Casual",
+            targetAudience: "Content Creators, Marketers, and Tech Enthusiasts",
+            seoKeywords: ["AIContent", "ContentMarketing", "FutureOfCreation", "ArtificialIntelligence"],
+            sourceURL: url
+        };
     }
 
+    function generateLinkedInPost(analysisData) {
+        let post = `🚀 Exploring: ${analysisData.mainTopic}!\n\n`;
+        post += `Key Takeaways:\n`;
+        analysisData.keyPoints.slice(0, 2).forEach(point => { // First 2 points for brevity
+            post += `- ${point}\n`;
+        });
+        post += `\nMy take: AI is transforming how we approach content, but the human element of creativity and critical thinking is irreplaceable. It's about augmentation, not full automation.\n\n`;
+        post += `What are your thoughts on AI in content creation? Share your insights! 👇\n\n`;
+        post += `#${analysisData.seoKeywords.join(' #')} ${analysisData.sourceURL ? `\nSource: ${analysisData.sourceURL}` : ''}`;
+        return post;
+    }
 
-    if (articleForm) {
-        articleForm.addEventListener('submit', (event) => {
+    function generateTwitterThread(analysisData) {
+        const thread = [];
+        thread.push(`Let's talk about ${analysisData.mainTopic}! (1/${analysisData.keyPoints.length + 2}) #AI #ContentCreation`);
+
+        analysisData.keyPoints.forEach((point, index) => {
+            thread.push(`${index + 2}/${analysisData.keyPoints.length + 2}: ${point.substring(0, 200)}...`); // Keep tweets concise
+        });
+
+        thread.push(`${analysisData.keyPoints.length + 2}/${analysisData.keyPoints.length + 2}: What's your biggest question or insight about AI in content? Drop a reply! #${analysisData.seoKeywords[0]} #${analysisData.seoKeywords[1]} ${analysisData.sourceURL ? `\nRead more: ${analysisData.sourceURL}` : ''}`);
+        return thread;
+    }
+
+    function generateInstagramCaption(analysisData) {
+        let caption = `✨ ${analysisData.mainTopic} ✨\n\n`;
+        caption += `Diving deep into how AI is changing the game for creators! 🤖💻\n\n`;
+        caption += `Some food for thought:\n`;
+        analysisData.keyPoints.forEach(point => {
+            caption += `➡️ ${point}\n`;
+        });
+        caption += `\nWhat are your favorite AI tools or concerns? Let me know in the comments! 👇\n\n`;
+        caption += `#${analysisData.seoKeywords.join(' #')} #TechInnovation #ContentStrategy`;
+        return caption;
+    }
+
+    function generateBlogSummary(analysisData) {
+        let summaryHtml = `<p>This article, focusing on "${analysisData.mainTopic}", covers several critical aspects. Here's a quick rundown:</p>`;
+        summaryHtml += `<ul>`;
+        analysisData.keyPoints.forEach(point => {
+            summaryHtml += `<li>${point}</li>`;
+        });
+        summaryHtml += `</ul>`;
+        summaryHtml += `<p>The piece suggests a ${analysisData.tone.toLowerCase()} approach, targeting ${analysisData.targetAudience}. For a deeper understanding, refer to the original content at ${analysisData.sourceURL}.</p>`;
+        return summaryHtml;
+    }
+
+    if (solveitForm) {
+        solveitForm.addEventListener('submit', async (event) => {
             event.preventDefault();
+            const url = urlInput.value.trim();
 
-            // Get values from input fields
-            const promptText = document.getElementById('prompt').value.trim();
-            const primaryKeywords = document.getElementById('primary-keywords').value.trim();
-            const secondaryKeywords = document.getElementById('secondary-keywords').value.trim();
-            const wordCount = parseInt(document.getElementById('word-count').value) || 1000;
-
-            articleOutputDiv.innerHTML = '<p class="generating-message">Generating your enhanced article structure...</p>';
-
-            // --- 1. Title Generation ---
-            let title = `Your Comprehensive Guide to ${primaryKeywords || 'the Main Topic'}`;
-            if (promptText.length > 10 && !primaryKeywords) { // Use prompt if no primary keyword and prompt is somewhat descriptive
-                title = promptText.split(' ').slice(0, 8).join(' ') + "..."; // First 8 words of prompt
+            if (!url) {
+                alert('Please enter a URL.');
+                return;
             }
-            if (title.length > 70) title = title.substring(0, 67) + "..."; // Aim for ~60-70 chars
 
-            // --- 2. Meta Description Generation ---
-            let metaDescription = `Discover everything you need to know about ${primaryKeywords || 'this important subject'}. ${promptText.substring(0, 155 - (primaryKeywords ? primaryKeywords.length : 25) - 25 )}`;
-            if (metaDescription.length > 160) metaDescription = metaDescription.substring(0, 157) + "...";
+            // Clear previous outputs & show loading
+            if (analysisInsightsOutput) analysisInsightsOutput.innerHTML = '<p class="generating-message">Analyzing and generating content...</p>';
+            if (linkedinPostOutput) linkedinPostOutput.innerHTML = '';
+            if (twitterThreadOutput) twitterThreadOutput.innerHTML = '';
+            if (instagramCaptionOutput) instagramCaptionOutput.innerHTML = '';
+            if (blogSummaryOutput) blogSummaryOutput.innerHTML = '';
+            if (visualSuggestionsOutput) visualSuggestionsOutput.textContent = '';
+            if (hashtagSuggestionsOutput) hashtagSuggestionsOutput.textContent = '';
 
-            // --- 3. URL Slug Generation ---
-            let slug = title.toLowerCase()
-                            .replace(/\s+/g, '-')         // Replace spaces with -
-                            .replace(/[^\w-]+/g, '')    // Remove all non-word chars
-                            .replace(/--+/g, '-')       // Replace multiple - with single -
-                            .replace(/^-+/, '')          // Trim - from start of text
-                            .replace(/-+$/, '');         // Trim - from end of text
-            if (slug.length > 50) slug = slug.substring(0, 50);
+            // Simulate API call delay
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
+            try {
+                const analysisData = mockUrlAnalysis(url);
 
-            let articleHTML = `<div class="seo-preview-output">
-                                <h3>SEO Preview</h3>
-                                <p><strong>Title:</strong> ${title}</p>
-                                <div class="meta-description-preview"><strong>Meta Description:</strong> ${metaDescription}</div>
-                                <div class="slug-preview"><strong>Slug:</strong> /${slug}</div>
-                               </div>`;
-            
-            articleHTML += `<div class="generated-article-content"><h3>Generated Article Draft</h3>`;
+                const linkedInContent = generateLinkedInPost(analysisData);
+                const twitterContent = generateTwitterThread(analysisData);
+                const instagramContent = generateInstagramCaption(analysisData);
+                const blogContent = generateBlogSummary(analysisData);
 
-            // --- Main Article H1 (using the generated title) ---
-            articleHTML += `<h1>${title}</h1>`;
+                if (analysisInsightsOutput) {
+                    analysisInsightsOutput.innerHTML = `<strong>Main Topic:</strong> ${analysisData.mainTopic}<br><strong>Tone:</strong> ${analysisData.tone}<br><strong>Target Audience:</strong> ${analysisData.targetAudience}<br><strong>Source:</strong> <a href="${analysisData.sourceURL}" target="_blank">${analysisData.sourceURL}</a>`;
+                }
+                if (linkedinPostOutput) linkedinPostOutput.innerHTML = linkedInContent.replace(/\n/g, '<br>');
+                if (twitterThreadOutput) twitterThreadOutput.innerHTML = twitterContent.map(tweet => `<p>${tweet.replace(/\n/g, '<br>')}</p>`).join('');
+                if (instagramCaptionOutput) instagramCaptionOutput.innerHTML = instagramContent.replace(/\n/g, '<br>');
+                if (blogSummaryOutput) blogSummaryOutput.innerHTML = blogContent;
+                if (visualSuggestionsOutput) visualSuggestionsOutput.textContent = "Consider using an infographic for key points or a short video summary for social media.";
+                if (hashtagSuggestionsOutput) hashtagSuggestionsOutput.textContent = analysisData.seoKeywords.map(k => `#${k}`).join(' ');
 
-            // --- 4. Introduction (100-150 words) ---
-            articleHTML += `<p class="introduction">This post dives deep into the topic of "${promptText || 'your specified subject'}". We will explore the key aspects of ${primaryKeywords || 'this area'}, including insights into ${secondaryKeywords || 'related concepts'}. Our goal is to provide a comprehensive overview to help you understand its importance and potential applications. ${generatePlaceholderText(80, primaryKeywords)}</p>`;
-            articleHTML += `<p>${generatePlaceholderText(60, secondaryKeywords)}</p>`;
-
-            // --- 5. Body ---
-            articleHTML += `<h2>Understanding ${primaryKeywords || 'the Core Subject'} in Depth</h2>`;
-            articleHTML += `<p>${generatePlaceholderText(100, primaryKeywords)}</p>`;
-            articleHTML += `<p>${generatePlaceholderText(120)}</p>`;
-
-            articleHTML += `<h3>Key Benefits of ${secondaryKeywords || primaryKeywords}</h3>`;
-            articleHTML += `<ul>
-                                <li>Benefit 1: ${generatePlaceholderText(10, secondaryKeywords)}.</li>
-                                <li>Benefit 2: ${generatePlaceholderText(12)}.</li>
-                                <li>Benefit 3: ${generatePlaceholderText(15, primaryKeywords)}.</li>
-                            </ul>`;
-            articleHTML += `<p>${generatePlaceholderText(80)}</p>`;
-
-            articleHTML += `<h2>Exploring Applications of ${primaryKeywords}</h2>`;
-            articleHTML += `<p>${generatePlaceholderText(100, secondaryKeywords)}</p>`;
-            
-            // --- 6. Image Optimization Placeholder ---
-            articleHTML += `<div class="image-placeholder">
-                                <h4>Image Placeholder & Optimization Tip</h4>
-                                <p><strong>Visual Content Suggestion:</strong> Include a relevant, high-quality image here that visually represents ${primaryKeywords || 'the main topic'}.</p>
-                                <p><strong>Alt Text Example:</strong> "A clear visual explaining ${primaryKeywords || 'the core concept discussed'}"</p>
-                                <p><em>(Remember to use descriptive alt text for accessibility and SEO, and optimize image file sizes.)</em></p>
-                            </div>`;
-            
-            articleHTML += `<p>${generatePlaceholderText(100)}</p>`;
-
-            articleHTML += `<h3>Further Considerations for ${secondaryKeywords || 'Advanced Users'}</h3>`;
-            articleHTML += `<p>${generatePlaceholderText(150, secondaryKeywords)}</p>`;
-
-            // --- 7. Conclusion (approx 100 words) ---
-            articleHTML += `<h2 class="conclusion-heading">Conclusion</h2>`;
-            articleHTML += `<p class="conclusion">In summary, ${primaryKeywords || 'this topic'} offers a wealth of insights and opportunities. We've touched upon its fundamental aspects, key benefits, and potential applications, including how ${secondaryKeywords || 'related factors'} play a role. ${generatePlaceholderText(50, primaryKeywords)} We encourage you to share your thoughts, questions, or experiences in the comments below. Your engagement helps us all learn more!</p>`;
-            
-            articleHTML += `</div>`; // End .generated-article-content
-
-            // Simulate a delay for "generation" then display
-            articleOutputDiv.classList.remove('visible'); // Reset animation state
-
-            setTimeout(() => {
-                articleOutputDiv.innerHTML = articleHTML;
-                // Timeout to allow DOM update before adding class for animation
-                setTimeout(() => { 
-                    articleOutputDiv.classList.add('visible');
-                }, 50); 
-            }, 1000); // 1 second delay for "generating" message
+            } catch (error) {
+                console.error("Error during SOLVEiT PRO processing:", error);
+                if (analysisInsightsOutput) analysisInsightsOutput.innerHTML = '<p class="error">An error occurred. Please try again.</p>';
+            }
         });
     } else {
-        console.error('Article form not found!');
+        console.warn('SOLVEiT PRO form (solveit-form) not found!');
     }
+
+    // Placeholder info for additional SOLVEiT PRO tools
+    const solveitPlagButton = document.querySelector('#solveit-plagiarism-checker button');
+    if (solveitPlagButton) {
+        solveitPlagButton.addEventListener('click', () => {
+            alert('Plagiarism Checker (SOLVEiT PRO): This conceptual feature would integrate advanced plagiarism detection to ensure your content is original before publishing.');
+        });
+    }
+
+    const solveitToneButton = document.querySelector('#solveit-tone-adjuster button');
+    if (solveitToneButton) {
+        solveitToneButton.addEventListener('click', () => {
+            alert('Tone Adjuster (SOLVEiT PRO): Imagine easily selecting and applying different tones (e.g., formal, casual, witty) to your generated posts with this conceptual tool!');
+        });
+    }
+
+    const solveitABTestButton = document.querySelector('#solveit-abtest-generator button');
+    if (solveitABTestButton) {
+        solveitABTestButton.addEventListener('click', () => {
+            alert('A/B Test Generator (SOLVEiT PRO): This feature would help you create multiple variations of your posts to test which headlines or calls to action perform best. (Conceptual)');
+        });
+    }
+    // --- End SOLVEiT PRO Logic ---
+
 
     // --- Intersection Observer for Scroll Animations ---
     const observerOptions = {

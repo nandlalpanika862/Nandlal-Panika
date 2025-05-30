@@ -226,57 +226,166 @@ textarea {
     min-height: 120px;
 }
 
-/* Article Generator Section Specific Styles */
-#article-generator-section {
-    background-color: #fbfcfe; /* Slightly distinct background */
-    border: 1px solid #e0e7ef; /* Lighter border for emphasis */
-    box-shadow: 0 6px 15px rgba(0,0,0,0.07); /* More emphasis */
+/* SOLVEiT PRO Section Specific Styles */
+#solveit-pro-section {
+    background-color: #fdfdff; /* Slightly distinct background, similar to old article generator */
+    border: 1px solid #e0e7ef;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.07);
 }
-#article-generator-section h2 {
+#solveit-pro-section h2 { /* This is the main "SOLVEiT PRO - AI Content Analysis..." title */
     font-size: 2.4em;
-    margin-bottom: 1.5em;
+    margin-bottom: 1.2em; /* Reduced margin slightly */
+    text-align: center;
 }
 
-#article-form label {
+#solveit-form div { /* Wrapper for label and input */
+    margin-bottom: 1.5rem;
+}
+#solveit-form label {
+    display: block;
+    margin-bottom: 0.6rem; /* Space between label and input */
+    font-weight: 600;
     font-size: 1.05rem;
-    margin-bottom: 0.75rem;
     color: var(--primary-deep-blue);
 }
-#article-form .button {
-    background-color: var(--accent-warm);
+/* #url-input should pick up general input[type="url"] styles */
+/* #solveit-generate-btn should pick up general .button styles, verify it does */
+#solveit-generate-btn {
+    /* If specific styling needed, e.g. primary action color */
+    background-color: var(--accent-teal); /* Main button color */
     padding: 0.9rem 2rem;
     font-size: 1.1rem;
 }
-#article-form .button:hover {
-    background-color: #e87030; /* Darker warm accent */
-    filter: none; /* Remove general brightness filter for this specific button if needed */
+#solveit-generate-btn:hover {
+    background-color: #3dbbb5; /* Darker teal */
 }
 
-/* Generated Article Output Styling */
-#generated-article-output {
+
+/* SOLVEiT PRO Output Container */
+#solveit-output-container {
     margin-top: 2.5em;
-    padding: 2em;
+    padding: 1.5em; /* Padding for the container itself */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     background-color: #fff;
-    min-height: 100px;
-    opacity: 0;
-    transform: translateY(10px);
-    /* JS will add .visible to trigger animation */
-}
-#generated-article-output.visible {
-    opacity: 1;
-    transform: translateY(0);
-    animation: fadeIn var(--transition-speed-slow) ease-out forwards;
 }
 
+#analysis-insights-output {
+    background-color: #e8f4fa; /* Light blue background */
+    padding: 1.2em;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 2em; /* More space before post sections */
+    border: 1px solid var(--accent-light-blue);
+    font-size: 0.95rem;
+}
+#analysis-insights-output strong {
+    color: var(--primary-deep-blue);
+}
+
+/* Styling for individual post output sections */
+#linkedin-post-output,
+#twitter-thread-output,
+#instagram-caption-output,
+#blog-summary-output {
+    margin-bottom: 2em; /* Space between each post type */
+}
+
+#solveit-output-container h3 { /* For "LinkedIn Post", "Twitter Thread" etc. */
+    font-size: 1.6em;
+    color: var(--secondary-sky-blue);
+    margin-bottom: 0.75em;
+    border-bottom: 2px solid var(--accent-light-blue);
+    padding-bottom: 0.3em;
+}
+
+.post-content {
+    background-color: #f9f9f9; /* A light background for contrast */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1.2em;
+    margin-top: 0.5em;
+    min-height: 120px; /* Slightly taller min-height */
+    white-space: pre-wrap; /* Handles newlines from JS strings */
+    font-size: 0.95rem; /* Slightly smaller font for content blocks */
+    line-height: 1.7; /* More line spacing for readability */
+}
+#twitter-thread-output .post-content p { /* For individual tweets */
+    margin-bottom: 1em; /* Space between tweets */
+    padding-bottom: 0.5em;
+    border-bottom: 1px dashed #ddd; /* Separator for tweets */
+}
+#twitter-thread-output .post-content p:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+
+/* Enhancement Areas */
+#visual-suggestions-output,
+#hashtag-suggestions-output {
+    margin-top: 1.5em;
+    padding: 1em;
+    background-color: #f0f8ff; /* Alice blue, very light */
+    border-left: 4px solid var(--accent-teal);
+    border-radius: var(--border-radius-sm);
+}
+#solveit-output-container h4 { /* For "Visual Content Suggestions", "Hashtag Suggestions" */
+    font-size: 1.25em;
+    color: var(--primary-deep-blue);
+    margin-bottom: 0.5em;
+}
+#visual-suggestions-output p,
+#hashtag-suggestions-output p {
+    font-size: 0.9rem;
+    color: var(--text-light-gray);
+    margin-bottom: 0; /* Remove default p margin if only one p */
+}
+
+/* Additional SOLVEiT PRO Tools Section */
+.solveit-additional-tools {
+    margin-top: 3em; /* Space above this section */
+    padding-top: 2em;
+    border-top: 1px solid var(--border-color);
+}
+.solveit-additional-tools h2 { /* "Additional SOLVEiT PRO Features" */
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: var(--primary-deep-blue);
+}
+/* .tool-card styles should be inherited. Verify and add specifics if needed */
+#solveit-pro-section .tool-card { /* More specific selector for these tool cards */
+    background-color: #fdfdff; /* Ensure they match section bg if different from other tool cards */
+    min-height: auto; /* Override min-height if they are simpler */
+}
+#solveit-pro-section .tool-card h3 {
+    font-size: 1.4em; /* Slightly smaller for these cards */
+    color: var(--secondary-sky-blue);
+}
+#solveit-pro-section .tool-card p {
+    margin-bottom: 1.2em; /* Space before the button */
+    font-size: 0.95rem;
+    flex-grow: 0; /* Override flex-grow from general tool-card if any */
+}
+#solveit-pro-section .tool-card .button {
+    background-color: var(--accent-light-blue); /* Different button color for these "Learn More" */
+    width: 100%; /* Make buttons full width in these cards */
+}
+#solveit-pro-section .tool-card .button:hover {
+    background-color: var(--secondary-sky-blue);
+}
+
+/* Generating Message Style (re-confirming or adding) */
 .generating-message {
     font-style: italic;
-    color: var(--secondary-sky-blue);
+    color: var(--secondary-sky-blue); /* Existing variable */
     text-align: center;
-    padding: 1rem 0;
+    padding: 1.5rem 0; /* More padding */
+    font-size: 1.1em;
 }
 
+/* Old .seo-preview-output - can be removed or repurposed if needed */
+/* For now, let's assume it's not directly used by SOLVEiT PRO */
 .seo-preview-output {
     background-color: #e8f4fa;
     padding: 1.5em;

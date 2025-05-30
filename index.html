@@ -15,51 +15,66 @@
     </header>
 
     <main>
-        <section id="article-generator-section" class="animate-on-scroll">
-            <h2>Create Your High-Quality Article</h2>
-            <form id="article-form">
+        <section id="solveit-pro-section" class="animate-on-scroll">
+            <h2>SOLVEiT PRO - AI Content Analysis & Post Generator</h2>
+            <form id="solveit-form">
                 <div>
-                    <label for="prompt">Prompt/Topic:</label>
-                    <textarea id="prompt" name="prompt" rows="4" placeholder="e.g., Write a 1500-word blog post titled '10 Proven Ways to Make Money Blogging in 2024 (Beginner's Guide)'..." required></textarea>
+                    <label for="url-input">Enter URL to Analyze:</label>
+                    <input type="url" id="url-input" name="url-input" placeholder="e.g., https://example.com/article" required>
                 </div>
-                <div>
-                    <label for="primary-keywords">Primary Keyword(s):</label>
-                    <input type="text" id="primary-keywords" name="primary-keywords" placeholder="e.g., blog monetization" required>
-                </div>
-                <div>
-                    <label for="secondary-keywords">Secondary Keyword(s):</label>
-                    <input type="text" id="secondary-keywords" name="secondary-keywords" placeholder="e.g., income from blogging">
-                </div>
-                <div>
-                    <label for="word-count">Desired Post Length (approx. words):</label>
-                    <input type="number" id="word-count" name="word-count" value="1000" min="100">
-                </div>
-                <button type="submit" class="button">Generate Article</button>
+                <button type="submit" class="button" id="solveit-generate-btn">Analyze & Generate Posts</button>
             </form>
-            <div id="generated-article-output">
-                <!-- Generated article will appear here -->
+            <div id="solveit-output-container">
+                <div id="analysis-insights-output">
+                    <!-- Analysis Insights will appear here -->
+                </div>
+                <div class="post-type-tabs">
+                    <!-- Tab buttons can go here if needed -->
+                </div>
+                <div id="linkedin-post-output">
+                    <h3>LinkedIn Post</h3>
+                    <div class="post-content"></div>
+                </div>
+                <div id="twitter-thread-output">
+                    <h3>Twitter Thread</h3>
+                    <div class="post-content"></div>
+                </div>
+                <div id="instagram-caption-output">
+                    <h3>Instagram Caption</h3>
+                    <div class="post-content"></div>
+                </div>
+                <div id="blog-summary-output">
+                    <h3>Blog Summary</h3>
+                    <div class="post-content"></div>
+                </div>
+                <div id="visual-suggestions-output">
+                    <h4>Visual Content Suggestions</h4>
+                    <p></p>
+                </div>
+                <div id="hashtag-suggestions-output">
+                    <h4>Hashtag Suggestions</h4>
+                    <p></p>
+                </div>
             </div>
-        </section>
 
-        <section id="important-info-section" class="animate-on-scroll">
-            <h2>About Your AI Article Assistant</h2>
-            <p><strong>Purpose:</strong> This tool is designed to help you generate high-quality, unique, and SEO-optimized blog posts quickly and efficiently. It's your assistant for drafting content, which you can then refine and personalize.</p>
-            
-            <p><strong>Content Quality:</strong> Our tool aims for originality, readability, and user-friendliness. While we strive for uniqueness by combining your inputs in novel ways, please remember this is a frontend-based generator. Always review, edit, and customize the generated content to ensure it aligns with your voice and quality standards. Fact-check information and add your unique insights.</p>
-            
-            <p><strong>SEO Focus:</strong> To maximize your content's visibility, remember to use relevant keywords in your prompt and dedicated keyword fields. The tool helps structure your post with SEO in mind, including a catchy title, keyword-rich descriptions (derived from your input), and a clear heading structure (H1, H2, H3).</p>
-            
-            <h3>Output Format You Can Expect:</h3>
-            <ul>
-                <li><strong>Title:</strong> Catchy and designed to be keyword-rich. We aim for a length that's generally good for SEO (around 50-70 characters based on your input).</li>
-                <li><strong>Introduction:</strong> A brief description of the problem or topic (target 100-150 words), outlining the post's purpose, often using your primary keywords.</li>
-                <li><strong>Body:</strong> Detailed information structured with H2 and H3 subheadings for readability and SEO. The placeholder content will include bullet points if relevant to the structure.</li>
-                <li><strong>Conclusion:</strong> A summary of the key takeaways (around 100 words) and often a placeholder for a call to action.</li>
-            </ul>
-            
-            <p><strong>Usage Tips:</strong> For the best results, provide a clear and detailed prompt. Specify your primary and any secondary keywords. The more specific your input, the more tailored the draft will be. Crucially, review and personalize the output to ensure it meets your exact needs, reflects your expertise, and adheres to Google's E-A-T (Expertise, Authoritativeness, Trustworthiness) guidelines.</p>
-            
-            <p><strong>Monetization & Google Guidelines:</strong> The generated structure is designed to allow for natural placement of affiliate links and ad spaces. However, always ensure your final, published content adheres to Google's guidelines, particularly regarding helpful content, E-A-T, and avoiding anything that could be construed as AI spam or clickbait. Your personal touch is key!</p>
+            <div class="solveit-additional-tools">
+                <h2>Additional SOLVEiT PRO Features</h2>
+                <div class="tool-card" id="solveit-plagiarism-checker">
+                    <h3>Plagiarism Checker</h3>
+                    <p>Ensure 100% originality.</p>
+                    <button class="button">Learn More</button>
+                </div>
+                <div class="tool-card" id="solveit-tone-adjuster">
+                    <h3>Tone Adjuster</h3>
+                    <p>Switch between formal/casual.</p>
+                    <button class="button">Learn More</button>
+                </div>
+                <div class="tool-card" id="solveit-abtest-generator">
+                    <h3>A/B Test Generator</h3>
+                    <p>Create multiple post versions.</p>
+                    <button class="button">Learn More</button>
+                </div>
+            </div>
         </section>
 
         <section id="other-tools-section" class="animate-on-scroll">
