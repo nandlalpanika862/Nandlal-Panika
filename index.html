@@ -3,205 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SOLVEiT PRO - Article Generator & Tools</title>
-    <link rel="stylesheet" href="style.css">
+    <title>SOLVEiT PRO</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* More professional font */
+            margin: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffffff; /* Professional white background */
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0; /* Subtle border */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow */
+        }
+
+        header .container {
+            display: flex;
+            flex-direction: column; /* Stack logo and nav on small screens */
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        header h1 {
+            color: #2c3e50; /* Darker, professional color for title */
+            margin: 0 0 10px 0; /* Adjust margin */
+            font-size: 2.5em;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex; /* Align nav items horizontally */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            justify-content: center; /* Center nav items */
+        }
+
+        nav ul li {
+            margin: 5px 15px; /* Spacing around nav items */
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #3498db; /* Professional blue for links */
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav a:hover, nav a:focus {
+            background-color: #3498db;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1100px; /* Slightly wider container */
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        main section {
+            padding: 40px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        main section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        footer {
+            background-color: #2c3e50; /* Dark, professional footer background */
+            color: #ecf0f1; /* Light text color for contrast */
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 10px 0;
+        }
+
+        footer a {
+            color: #3498db; /* Consistent link color */
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        footer div img { /* Basic styling for social icons */
+            margin: 0 10px;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        footer div img:hover {
+            opacity: 1;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) { /* Adjust for larger screens */
+            header .container {
+                flex-direction: row; /* Logo and nav side-by-side */
+            }
+            header h1 {
+                margin: 0; /* Reset margin for larger screens */
+            }
+            nav ul {
+                margin: 0; /* Reset margin for larger screens */
+            }
+        }
+
+        @media (max-width: 767px) {
+            nav ul li {
+                display: block; /* Stack nav items on very small screens */
+                margin: 10px 0;
+                text-align: center;
+            }
+            header h1 {
+                font-size: 2em; /* Slightly smaller title on mobile */
+            }
+            .container {
+                padding: 15px; /* Reduce padding on smaller screens */
+            }
+            main section {
+                padding: 30px 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>SOLVEiT PRO</h1>
-        <nav>
-            <!-- Navigation links will go here -->
-        </nav>
+        <div class="container">
+            <h1>SOLVEiT PRO</h1>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#use-cases">Use Cases</a></li>
+                    <li><a href="#how-it-works">How it Works</a></li>
+                    <li><a href="#why-choose-us">Why Choose Us</a></li>
+                    <li><a href="#cta">Try it Now</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
     <main>
-        <section id="article-generator-section" class="animate-on-scroll">
-            <h2>Create Your High-Quality Article</h2>
-            <form id="article-form">
-                <div>
-                    <label for="prompt">Prompt/Topic:</label>
-                    <textarea id="prompt" name="prompt" rows="4" placeholder="e.g., Write a 1500-word blog post titled '10 Proven Ways to Make Money Blogging in 2024 (Beginner's Guide)'..." required></textarea>
-                </div>
-                <div>
-                    <label for="primary-keywords">Primary Keyword(s):</label>
-                    <input type="text" id="primary-keywords" name="primary-keywords" placeholder="e.g., blog monetization" required>
-                </div>
-                <div>
-                    <label for="secondary-keywords">Secondary Keyword(s):</label>
-                    <input type="text" id="secondary-keywords" name="secondary-keywords" placeholder="e.g., income from blogging">
-                </div>
-                <div>
-                    <label for="word-count">Desired Post Length (approx. words):</label>
-                    <input type="number" id="word-count" name="word-count" value="1000" min="100">
-                </div>
-                <button type="submit" class="button">Generate Article</button>
-            </form>
-            <div id="generated-article-output">
-                <!-- Generated article will appear here -->
-            </div>
-        </section>
+        <div class="container">
+            <section id="introduction">
+                <h2>SOLVEiT PRO: Automatically create amazing posts from any link – Combo of AI tools!</h2>
+                <p>Do you waste time creating high-quality content for social media? Do you want a tool to read a blog, article or webpage and automatically generate professional posts for you? SOLVEiT PRO is an AI-powered multiple tool website that analyzes links and creates attractive, responsive and engaging posts for LinkedIn, Instagram, Twitter and Facebook.</p>
+            </section>
 
-        <section id="important-info-section" class="animate-on-scroll">
-            <h2>About Your AI Article Assistant</h2>
-            <p><strong>Purpose:</strong> This tool is designed to help you generate high-quality, unique, and SEO-optimized blog posts quickly and efficiently. It's your assistant for drafting content, which you can then refine and personalize.</p>
-            
-            <p><strong>Content Quality:</strong> Our tool aims for originality, readability, and user-friendliness. While we strive for uniqueness by combining your inputs in novel ways, please remember this is a frontend-based generator. Always review, edit, and customize the generated content to ensure it aligns with your voice and quality standards. Fact-check information and add your unique insights.</p>
-            
-            <p><strong>SEO Focus:</strong> To maximize your content's visibility, remember to use relevant keywords in your prompt and dedicated keyword fields. The tool helps structure your post with SEO in mind, including a catchy title, keyword-rich descriptions (derived from your input), and a clear heading structure (H1, H2, H3).</p>
-            
-            <h3>Output Format You Can Expect:</h3>
-            <ul>
-                <li><strong>Title:</strong> Catchy and designed to be keyword-rich. We aim for a length that's generally good for SEO (around 50-70 characters based on your input).</li>
-                <li><strong>Introduction:</strong> A brief description of the problem or topic (target 100-150 words), outlining the post's purpose, often using your primary keywords.</li>
-                <li><strong>Body:</strong> Detailed information structured with H2 and H3 subheadings for readability and SEO. The placeholder content will include bullet points if relevant to the structure.</li>
-                <li><strong>Conclusion:</strong> A summary of the key takeaways (around 100 words) and often a placeholder for a call to action.</li>
-            </ul>
-            
-            <p><strong>Usage Tips:</strong> For the best results, provide a clear and detailed prompt. Specify your primary and any secondary keywords. The more specific your input, the more tailored the draft will be. Crucially, review and personalize the output to ensure it meets your exact needs, reflects your expertise, and adheres to Google's E-A-T (Expertise, Authoritativeness, Trustworthiness) guidelines.</p>
-            
-            <p><strong>Monetization & Google Guidelines:</strong> The generated structure is designed to allow for natural placement of affiliate links and ad spaces. However, always ensure your final, published content adheres to Google's guidelines, particularly regarding helpful content, E-A-T, and avoiding anything that could be construed as AI spam or clickbait. Your personal touch is key!</p>
-        </section>
+            <section id="features">
+                <h2>Key Features</h2>
+                <ol>
+                    <li><strong>Smart Link Analyzer:</strong> Enter the URL of any blog/article, AI will extract its summary, keywords and main points. Understands the content with tone detection (professional, casual, motivational).</li>
+                    <li><strong>AI Post Generator (Multiplatform):</strong>
+                        <ul>
+                            <li>LinkedIn: Professional updates, thought leadership posts.</li>
+                            <li>Instagram/Twitter: Short, catchy captions + hashtag suggestions.</li>
+                            <li>Facebook: Long-format engaging posts.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Blogger Tools (New Features!):</strong>
+                        <ul>
+                            <li>✅ Blog Outline Generator – SEO-friendly structure for any topic.</li>
+                            <li>✅ Content Rewriter – Update old blogs to fresh versions.</li>
+                            <li>✅ Bullet Points Converter – Convert long articles to skim-friendly lists.</li>
+                            <li>✅ FAQ Generator – Automatic question-and-answer section for blogs.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Visual Content Ideas:</strong>
+                        <ul>
+                            <li>Auto image suggestions (Canva/Unsplash integration).</li>
+                            <li>Video script generator (for YouTube/Reels).</li>
+                        </ul>
+                    </li>
+                    <li><strong>Templates + Customization:</strong>
+                        <ul>
+                            <li>50+ ready-to-use templates (product launches, events, polls).</li>
+                            <li>Function to change font, color, and layout.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
 
-        <section id="other-tools-section" class="animate-on-scroll">
-            <h2>More Awesome Tools</h2>
-            <div class="tools-grid">
+            <section id="use-cases">
+                <h2>User Cases (useful for whom?)</h2>
+                <ul>
+                    <li>✔ Digital Marketers – Quick content for clients.</li>
+                    <li>✔ Bloggers – Convert articles into social media-friendly posts.</li>
+                    <li>✔ Startups – Increase brand presence by saving time.</li>
+                    <li>✔ Students/Researchers – Create summaries of long articles.</li>
+                </ul>
+            </section>
 
-                <!-- Love Calculator -->
-                <div class="tool-card" id="love-calculator">
-                    <h3>Love Calculator</h3>
-                    <label for="love-name1">Your Name:</label>
-                    <input type="text" id="love-name1" placeholder="Enter your name">
-                    <label for="love-name2">Partner's Name:</label>
-                    <input type="text" id="love-name2" placeholder="Enter partner's name">
-                    <button class="button" id="calculate-love">Calculate Love</button>
-                    <div id="love-result" class="tool-output"></div>
-                </div>
+            <section id="how-it-works">
+                <h2>How it works? (3 steps)</h2>
+                <ol>
+                    <li>Paste the link (blog/news/webpage).</li>
+                    <li>Choose the tone and platform (e.g.: LinkedIn-Professional).</li>
+                    <li>Click “Generate” – AI will instantly generate 5+ variants!</li>
+                </ol>
+            </section>
 
-                <!-- Age Calculator -->
-                <div class="tool-card" id="age-calculator">
-                    <h3>Age Calculator</h3>
-                    <label for="age-dob">Date of Birth:</label>
-                    <input type="date" id="age-dob">
-                    <button class="button" id="calculate-age">Calculate Age</button>
-                    <div id="age-result" class="tool-output"></div>
-                </div>
+            <section id="combo-tools">
+                <h2>Combo of other tools (on the same platform)</h2>
+                <ul>
+                    <li>🔹 Plagiarism Checker – Verify the originality of the generated content.</li>
+                    <li>🔹 SEO Optimizer – Add keywords to posts.</li>
+                    <li>🔹 Trending Topics – Real-time hot trends suggestions.</li>
+                </ul>
+            </section>
 
-                <!-- Voice to Text Converter -->
-                <div class="tool-card" id="voice-to-text">
-                    <h3>Voice to Text Converter</h3>
-                    <button class="button" id="vtt-start-btn">Start Listening</button>
-                    <div id="vtt-status" class="tool-status"></div>
-                    <textarea id="vtt-output" rows="5" placeholder="Converted text will appear here..."></textarea>
-                </div>
+            <section id="why-choose-us">
+                <h2>Why choose SOLVEiT PRO?</h2>
+                <ul>
+                    <li>Save time – 10x faster than manual writing.</li>
+                    <li>Extra Tools – Blogging + Social Media, all in one place.</li>
+                    <li>Free Trial – 10 generation/day without payment.</li>
+                </ul>
+            </section>
 
-                <!-- Salary Calculator -->
-                <div class="tool-card" id="salary-calculator">
-                    <h3>Salary Calculator</h3>
-                    <label for="salary-hourly-rate">Hourly Rate ($):</label>
-                    <input type="number" id="salary-hourly-rate" placeholder="e.g., 20">
-                    <label for="salary-hours-week">Hours per Week:</label>
-                    <input type="number" id="salary-hours-week" value="40">
-                    <button class="button" id="salary-calculate-btn">Calculate Salary</button>
-                    <div id="salary-result" class="tool-output"></div>
-                </div>
+            <section id="cta">
+                <h2>Call to Action (CTA)</h2>
+                <p>🚀 Try it now! Visit SOLVEiT PRO and create your first AI-generated post.</p>
+                <p>📌 Comment: What kind of content would you use this tool for?</p>
+                <p>#AI #ContentMarketing #BloggingTools #SocialMediaMarketing #DigitalIndia</p>
+            </section>
 
-                <!-- Plagiarism Checker -->
-                <div class="tool-card" id="plagiarism-checker">
-                    <h3>Plagiarism Checker</h3>
-                    <textarea id="plagiarism-text" rows="5" placeholder="Paste text here to learn about plagiarism checking..."></textarea>
-                    <button class="button" id="plagiarism-check-btn">Learn More About Plagiarism Checks</button>
-                    <div id="plagiarism-result" class="tool-output">
-                        <p>Enter text above and click the button to understand how plagiarism checking works.</p>
-                    </div>
-                </div>
+            <section id="bonus-tip">
+                <h2>Bonus Tip:</h2>
+                <p>If you want a description generator for YouTube or Email newsletter templates, give us feedback! We are adding these features soon.</p>
+            </section>
 
-                <!-- SEO Audit Tool -->
-                <div class="tool-card" id="seo-audit-tool">
-                    <h3>SEO Audit Tool</h3>
-                    <label for="seo-url-input">Website URL:</label>
-                    <input type="url" id="seo-url-input" placeholder="https://example.com">
-                    <button class="button" id="seo-audit-btn">Learn About SEO Audits</button>
-                    <div id="seo-audit-result" class="tool-output">
-                        <p>Enter a URL and click the button to understand what a typical SEO audit involves.</p>
-                    </div>
-                </div>
+            <section id="target-audience">
+                <h2>Target Audience:</h2>
+                <p>Bloggers, Social Media Managers, Agency Owners, Influencers.</p>
+            </section>
 
-                <!-- YOUTUBE AI TOOL -->
-                <div class="tool-card" id="youtube-ai-tool">
-                    <h3>YOUTUBE AI TOOL</h3>
-                    <label for="youtube-url-input">Video Link/Topic:</label>
-                    <input type="text" id="youtube-url-input" placeholder="Enter YouTube Video URL or Topic">
-                    <button class="button" id="youtube-ai-btn">Learn About YouTube AI Analysis</button>
-                    <div id="youtube-ai-result" class="tool-output">
-                        <p>Enter a video URL/topic and click to learn what AI analysis for YouTube content could involve.</p>
-                    </div>
-                </div>
-
-                <!-- Keyword Research Tool -->
-                <div class="tool-card" id="keyword-research-tool">
-                    <h3>Keyword Research Tool</h3>
-                    <label for="keyword-input">Seed Keyword:</label>
-                    <input type="text" id="keyword-input" placeholder="Enter a seed keyword">
-                    <button class="button" id="keyword-research-btn">Learn About Keyword Research</button>
-                    <div id="keyword-research-result" class="tool-output">
-                        <p>Enter a seed keyword and click to learn what keyword research involves.</p>
-                    </div>
-                </div>
-
-                <!-- WordPad - Online Text Editor -->
-                <div class="tool-card" id="wordpad-editor">
-                    <h3>WordPad - Online Text Editor</h3>
-                    <textarea id="wordpad-textarea" rows="10" placeholder="Start typing here..."></textarea>
-                    <div id="wordpad-stats" class="tool-status">Chars: 0 | Words: 0 | Lines: 0</div>
-                    <div class="wordpad-buttons">
-                        <button class="button" id="wordpad-clear-btn">Clear Text</button>
-                        <button class="button" id="wordpad-copy-btn">Copy Text</button>
-                    </div>
-                </div>
-
-                <!-- GST Calculator -->
-                <div class="tool-card" id="gst-calculator">
-                    <h3>GST Calculator</h3>
-                    <label for="gst-amount">Amount (Pre-GST):</label>
-                    <input type="number" id="gst-amount" placeholder="1000">
-                    <label for="gst-rate">GST Rate (%):</label>
-                    <input type="number" id="gst-rate" placeholder="18">
-                    <button class="button" id="gst-calculate-btn">Calculate GST</button>
-                    <div id="gst-result" class="tool-output"></div>
-                </div>
-
-                <!-- Loan Calculator -->
-                <div class="tool-card" id="loan-calculator">
-                    <h3>Loan Calculator</h3>
-                    <label for="loan-principal">Principal Amount:</label>
-                    <input type="number" id="loan-principal" placeholder="100000">
-                    <label for="loan-rate">Annual Interest Rate (%):</label>
-                    <input type="number" id="loan-rate" placeholder="7.5">
-                    <label for="loan-tenure-years">Loan Tenure (Years):</label>
-                    <input type="number" id="loan-tenure-years" placeholder="5">
-                    <button class="button" id="loan-calculate-btn">Calculate EMI</button>
-                    <div id="loan-result" class="tool-output"></div>
-                </div>
-
-                <!-- Discount Calculator -->
-                <div class="tool-card" id="discount-calculator">
-                    <h3>Discount Calculator</h3>
-                    <label for="discount-original-price">Original Price:</label>
-                    <input type="number" id="discount-original-price" placeholder="e.g., 100">
-                    <label for="discount-percentage-input">Discount (%):</label>
-                    <input type="number" id="discount-percentage-input" placeholder="e.g., 20">
-                    <button class="button" id="discount-calculate-btn">Calculate Discount</button>
-                    <div id="discount-result" class="tool-output"></div>
-                </div>
-
-            </div> <!-- end .tools-grid -->
-        </section>
+            <section id="tone">
+                <h2>Tone:</h2>
+                <p>Professional + Casual Mix (Hindi-English Blend).</p>
+            </section>
+        </div>
     </main>
 
     <footer>
-        <p>&copy; 2023 SOLVEiT PRO. All rights reserved.</p>
+        <div class="container">
+            <p>&copy; 2023 SOLVEiT PRO. All rights reserved.</p>
+            <p>
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
+            </p>
+            <div>
+                <a href="#" aria-label="Facebook"><img src="facebook-icon.png" alt="Facebook" width="24" height="24"></a>
+                <a href="#" aria-label="Twitter"><img src="twitter-icon.png" alt="Twitter" width="24" height="24"></a>
+                <a href="#" aria-label="Instagram"><img src="instagram-icon.png" alt="Instagram" width="24" height="24"></a>
+                <a href="#" aria-label="LinkedIn"><img src="linkedin-icon.png" alt="LinkedIn" width="24" height="24"></a>
+            </div>
+        </div>
     </footer>
-
-    <script src="script.js"></script>
+    <script>
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    </script>
 </body>
 </html>
